@@ -1,1 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aim.zip | gonzalo.zip</title>
+
+    <meta
+        name="description"
+        content="Entrenador de aim, precisión y reflejos para FPS."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="aim-app">
+
+        <header class="topbar">
+            <a class="back-link" href="../../">
+                ← gonzalo.zip
+            </a>
+
+            <div class="brand">
+                AIM.ZIP
+            </div>
+
+            <div class="top-stats">
+                <span>
+                    SCORE
+                    <strong id="score">0</strong>
+                </span>
+
+                <span>
+                    ACC
+                    <strong id="accuracy">100%</strong>
+                </span>
+            </div>
+        </header>
+
+        <section class="game-wrapper">
+
+            <div id="arena" class="arena">
+
+                <div id="start-screen" class="overlay">
+                    <p class="mode-label">FLICK TRAINING</p>
+
+                    <h1>Aim.zip</h1>
+
+                    <p class="description">
+                        Destruí todos los objetivos lo más rápido posible.
+                        Cada click fallado reduce tu precisión.
+                    </p>
+
+                    <div class="settings">
+
+                        <label>
+                            Objetivos
+
+                            <select id="target-count">
+                                <option value="10">10</option>
+                                <option value="20" selected>20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Tamaño
+
+                            <select id="target-size">
+                                <option value="60">Grande</option>
+                                <option value="46" selected>Medio</option>
+                                <option value="32">Pequeño</option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                    <button id="start-button" class="main-button">
+                        Empezar
+                    </button>
+                </div>
+
+                <div
+                    id="countdown"
+                    class="countdown hidden"
+                >
+                    3
+                </div>
+
+                <button
+                    id="target"
+                    class="target hidden"
+                    aria-label="Objetivo"
+                >
+                    <span></span>
+                </button>
+
+                <div
+                    id="results"
+                    class="overlay hidden"
+                >
+                    <p class="mode-label">
+                        RESULTADOS
+                    </p>
+
+                    <h2>Partida terminada</h2>
+
+                    <div class="results-grid">
+
+                        <div>
+                            <span>Score</span>
+                            <strong id="result-score">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Precisión</span>
+                            <strong id="result-accuracy">0%</strong>
+                        </div>
+
+                        <div>
+                            <span>Hits</span>
+                            <strong id="result-hits">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Misses</span>
+                            <strong id="result-misses">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Tiempo medio</span>
+                            <strong id="result-average">0 ms</strong>
+                        </div>
+
+                        <div>
+                            <span>Mejor reacción</span>
+                            <strong id="result-best">0 ms</strong>
+                        </div>
+
+                    </div>
+
+                    <p class="personal-best">
+                        Récord:
+                        <strong id="personal-best">--</strong>
+                    </p>
+
+                    <button
+                        id="restart-button"
+                        class="main-button"
+                    >
+                        Jugar de nuevo
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="bottom-stats">
+
+                <div>
+                    <span>TIME</span>
+                    <strong id="timer">0.00</strong>
+                </div>
+
+                <div>
+                    <span>HITS</span>
+                    <strong>
+                        <span id="hits">0</span>
+                        /
+                        <span id="total-targets">20</span>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>MISSES</span>
+                    <strong id="misses">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
