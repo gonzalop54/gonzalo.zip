@@ -1,1 +1,73 @@
+/* ========================================
+   gonzalo.zip
+   Estilos principales
+   ======================================== */
 
+
+/* ---------- Variables ---------- */
+
+:root {
+    --color-background: #0d1117;
+    --color-text: #ffffff;
+    --color-text-secondary: #8b949e;
+}
+
+
+/* ---------- Reset básico ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ---------- Página ---------- */
+
+body {
+    min-height: 100vh;
+
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ---------- Contenido principal ---------- */
+
+main {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+    text-align: center;
+}
+
+
+/* ---------- Títulos ---------- */
+
+h1 {
+    margin: 0 0 10px;
+
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1;
+}
+
+
+/* ---------- Texto ---------- */
+
+p {
+    margin: 0;
+
+    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+}
