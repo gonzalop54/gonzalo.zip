@@ -1,22 +1,36 @@
 /* ========================================
    gonzalo.zip
-   Estilos principales
+   Página principal
    ======================================== */
 
 
 /* ---------- Variables ---------- */
 
 :root {
-    --color-background: #0d1117;
-    --color-text: #ffffff;
-    --color-text-secondary: #8b949e;
+    --background: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2128;
+
+    --border: #30363d;
+    --border-hover: #58a6ff;
+
+    --text: #f0f6fc;
+    --text-secondary: #8b949e;
+
+    --accent: #58a6ff;
+
+    --max-width: 980px;
 }
 
 
-/* ---------- Reset básico ---------- */
+/* ---------- Reset ---------- */
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html,
@@ -26,48 +40,292 @@ body {
 }
 
 
-/* ---------- Página ---------- */
+/* ---------- Base ---------- */
 
 body {
     min-height: 100vh;
 
-    background-color: var(--color-background);
-    color: var(--color-text);
+    background: var(--background);
+    color: var(--text);
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
-/* ---------- Contenido principal ---------- */
+/* ---------- Página ---------- */
 
-main {
-    min-height: 100vh;
+.home {
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
+    );
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: 24px;
-    text-align: center;
+    margin: 0 auto;
+    padding: 80px 0 40px;
 }
 
 
-/* ---------- Títulos ---------- */
+/* ---------- Hero ---------- */
 
-h1 {
-    margin: 0 0 10px;
-
-    font-size: clamp(3rem, 8vw, 5rem);
-    line-height: 1;
+.hero {
+    max-width: 760px;
+    margin-bottom: 100px;
 }
 
+.eyebrow {
+    margin: 0 0 16px;
 
-/* ---------- Texto ---------- */
+    color: var(--accent);
 
-p {
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
     margin: 0;
 
-    color: var(--color-text-secondary);
+    font-size: clamp(
+        4rem,
+        12vw,
+        8rem
+    );
+
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+}
+
+.hero-description {
+    max-width: 620px;
+
+    margin: 32px 0 0;
+
+    color: var(--text-secondary);
+
     font-size: 1.25rem;
+    line-height: 1.6;
+}
+
+
+/* ---------- Experimentos ---------- */
+
+.experiments {
+    margin-bottom: 100px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 1rem;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.section-header span {
+    color: var(--text-secondary);
+
+    font-size: 0.85rem;
+}
+
+
+/* ---------- Lista ---------- */
+
+.experiment-list {
+    display: flex;
+    flex-direction: column;
+
+    border-top: 1px solid var(--border);
+}
+
+
+/* ---------- Tarjeta ---------- */
+
+.experiment-card {
+    display: grid;
+
+    grid-template-columns:
+        80px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 24px;
+
+    min-height: 130px;
+
+    padding: 24px 20px;
+
+    color: inherit;
+    text-decoration: none;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    transition:
+        background 160ms ease,
+        padding 160ms ease;
+}
+
+.experiment-card:hover {
+    background: var(--surface-hover);
+
+    padding-left: 28px;
+}
+
+.experiment-number {
+    color: var(--accent);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 0.9rem;
+}
+
+.experiment-content h3 {
+    margin: 0 0 8px;
+
+    font-size: 1.5rem;
+}
+
+.experiment-content p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    line-height: 1.5;
+}
+
+.experiment-arrow {
+    font-size: 2rem;
+
+    transition:
+        transform 160ms ease;
+}
+
+.experiment-card:hover
+.experiment-arrow {
+    transform: translateX(6px);
+}
+
+
+/* ---------- Deshabilitado ---------- */
+
+.experiment-card-disabled {
+    opacity: 0.4;
+
+    cursor: default;
+}
+
+.experiment-card-disabled:hover {
+    padding-left: 20px;
+
+    background: transparent;
+}
+
+.experiment-status {
+    color: var(--text-secondary);
+
+    font-size: 1.5rem;
+}
+
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+    padding-top: 30px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    color: var(--text-secondary);
+
+    font-size: 0.85rem;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+
+    .home {
+        width: min(
+            calc(100% - 28px),
+            var(--max-width)
+        );
+
+        padding-top: 50px;
+    }
+
+    .hero {
+        margin-bottom: 70px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(
+                3.5rem,
+                18vw,
+                6rem
+            );
+    }
+
+    .hero-description {
+        font-size: 1.05rem;
+    }
+
+    .experiment-card {
+        grid-template-columns:
+            50px
+            1fr
+            auto;
+
+        gap: 14px;
+
+        min-height: 120px;
+
+        padding:
+            20px
+            10px;
+    }
+
+    .experiment-card:hover {
+        padding-left: 16px;
+    }
+
+    .experiment-card-disabled:hover {
+        padding-left: 10px;
+    }
+
+    .experiment-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .experiment-content p {
+        font-size: 0.9rem;
+    }
+
 }
