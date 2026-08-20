@@ -5,5 +5,12 @@
     "description": "Un botón que no quiere que lo pulses.",
     "url": "pages/boton/",
     "status": "available"
+  },
+  {
+    "id": 2,
+    "title": "Aim.zip",
+    "description": "Entrenador de aim, precisión y reflejos para FPS.",
+    "url": "pages/aim/",
+    "status": "available"
   }
 ]
