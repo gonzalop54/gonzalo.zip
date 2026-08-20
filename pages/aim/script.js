@@ -1,25 +1,59 @@
 "use strict";
 
+
+/* ========================================
+   ELEMENTOS GENERALES
+   ======================================== */
+
 const arena =
     document.querySelector("#arena");
+
+const modeScreen =
+    document.querySelector("#mode-screen");
+
+const flickScreen =
+    document.querySelector("#flick-screen");
+
+const reactionScreen =
+    document.querySelector("#reaction-screen");
+
+const flickResults =
+    document.querySelector("#flick-results");
+
+const reactionResults =
+    document.querySelector("#reaction-results");
+
+const modeCards =
+    document.querySelectorAll("[data-mode]");
+
+const backModeButtons =
+    document.querySelectorAll(".back-mode-button");
+
+const goModesButtons =
+    document.querySelectorAll(".go-modes");
+
+const topStats =
+    document.querySelector("#top-stats");
+
+const bottomStats =
+    document.querySelector("#bottom-stats");
+
+
+/* ========================================
+   FLICK
+   ======================================== */
 
 const target =
     document.querySelector("#target");
 
-const startScreen =
-    document.querySelector("#start-screen");
-
 const countdown =
     document.querySelector("#countdown");
 
-const results =
-    document.querySelector("#results");
+const flickStartButton =
+    document.querySelector("#flick-start-button");
 
-const startButton =
-    document.querySelector("#start-button");
-
-const restartButton =
-    document.querySelector("#restart-button");
+const flickRestartButton =
+    document.querySelector("#flick-restart-button");
 
 const targetCountSelect =
     document.querySelector("#target-count");
@@ -67,7 +101,7 @@ const personalBest =
     document.querySelector("#personal-best");
 
 
-let running = false;
+let flickRunning = false;
 
 let hits = 0;
 let misses = 0;
@@ -82,6 +116,66 @@ let reactionTimes = [];
 let animationFrame = null;
 
 
+/* ========================================
+   REACTION
+   ======================================== */
+
+const reactionArea =
+    document.querySelector("#reaction-area");
+
+const reactionTarget =
+    document.querySelector("#reaction-target");
+
+const reactionMessage =
+    document.querySelector("#reaction-message");
+
+const reactionRoundsSelect =
+    document.querySelector("#reaction-rounds");
+
+const reactionStartButton =
+    document.querySelector("#reaction-start-button");
+
+const reactionRestartButton =
+    document.querySelector("#reaction-restart-button");
+
+const reactionAverage =
+    document.querySelector("#reaction-average");
+
+const reactionBest =
+    document.querySelector("#reaction-best");
+
+const reactionWorst =
+    document.querySelector("#reaction-worst");
+
+const reactionResultRounds =
+    document.querySelector("#reaction-result-rounds");
+
+const reactionFalseStarts =
+    document.querySelector("#reaction-false-starts");
+
+const reactionRecord =
+    document.querySelector("#reaction-record");
+
+
+let reactionRunning = false;
+let reactionReady = false;
+
+let reactionRound = 0;
+let reactionTotalRounds = 5;
+
+let reactionResultsArray = [];
+
+let falseStarts = 0;
+
+let reactionAppearedAt = 0;
+
+let reactionTimeout = null;
+
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+
 function sleep(milliseconds) {
     return new Promise(
         resolve =>
@@ -93,20 +187,104 @@ function sleep(milliseconds) {
 }
 
 
-async function startGame() {
-    running = false;
+function hideAllScreens() {
+    modeScreen.classList.add("hidden");
+    flickScreen.classList.add("hidden");
+    reactionScreen.classList.add("hidden");
 
-    startScreen.classList.add(
-        "hidden"
+    flickResults.classList.add("hidden");
+    reactionResults.classList.add("hidden");
+
+    countdown.classList.add("hidden");
+
+    target.classList.add("hidden");
+
+    reactionArea.classList.add("hidden");
+    reactionTarget.classList.add("hidden");
+}
+
+
+function showModeScreen() {
+    flickRunning = false;
+    reactionRunning = false;
+    reactionReady = false;
+
+    clearTimeout(reactionTimeout);
+
+    if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+    }
+
+    hideAllScreens();
+
+    modeScreen.classList.remove("hidden");
+
+    topStats.classList.add("hidden");
+    bottomStats.classList.add("hidden");
+}
+
+
+/* ========================================
+   SELECTOR DE MODOS
+   ======================================== */
+
+modeCards.forEach(card => {
+
+    card.addEventListener(
+        "click",
+        () => {
+
+            const mode =
+                card.dataset.mode;
+
+            hideAllScreens();
+
+            if (mode === "flick") {
+                flickScreen.classList.remove("hidden");
+            }
+
+            if (mode === "reaction") {
+                reactionScreen.classList.remove("hidden");
+            }
+
+        }
     );
 
-    results.classList.add(
-        "hidden"
+});
+
+
+backModeButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        showModeScreen
     );
 
-    target.classList.add(
-        "hidden"
+});
+
+
+goModesButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        showModeScreen
     );
+
+});
+
+
+/* ========================================
+   FLICK
+   ======================================== */
+
+async function startFlickGame() {
+
+    hideAllScreens();
+
+    topStats.classList.remove("hidden");
+    bottomStats.classList.remove("hidden");
+
+    flickRunning = false;
 
     hits = 0;
     misses = 0;
@@ -132,19 +310,17 @@ async function startGame() {
     totalTargetsElement.textContent =
         totalTargets;
 
-    resetStats();
+    resetFlickStats();
 
-    countdown.classList.remove(
-        "hidden"
-    );
+    countdown.classList.remove("hidden");
 
-    for (
-        const number of [3, 2, 1]
-    ) {
+    for (const number of [3, 2, 1]) {
+
         countdown.textContent =
             number;
 
         await sleep(650);
+
     }
 
     countdown.textContent =
@@ -152,11 +328,9 @@ async function startGame() {
 
     await sleep(350);
 
-    countdown.classList.add(
-        "hidden"
-    );
+    countdown.classList.add("hidden");
 
-    running = true;
+    flickRunning = true;
 
     gameStartedAt =
         performance.now();
@@ -171,42 +345,48 @@ async function startGame() {
 
 
 function spawnTarget() {
-    if (
-        hits >= totalTargets
-    ) {
-        finishGame();
+
+    if (hits >= totalTargets) {
+
+        finishFlickGame();
+
         return;
     }
 
     const arenaRect =
         arena.getBoundingClientRect();
 
-    const targetRect =
-        target.getBoundingClientRect();
+    const targetSize =
+        target.offsetWidth;
 
     const radius =
-        Math.max(
-            targetRect.width,
-            targetRect.height
-        ) / 2;
+        targetSize / 2;
 
     const padding =
         radius + 15;
+
+    const maxX =
+        arenaRect.width -
+        padding;
+
+    const maxY =
+        arenaRect.height -
+        padding;
 
     const x =
         padding +
         Math.random() *
         (
-            arenaRect.width -
-            padding * 2
+            maxX -
+            padding
         );
 
     const y =
         padding +
         Math.random() *
         (
-            arenaRect.height -
-            padding * 2
+            maxY -
+            padding
         );
 
     target.style.left =
@@ -215,9 +395,7 @@ function spawnTarget() {
     target.style.top =
         `${y}px`;
 
-    target.classList.remove(
-        "hidden"
-    );
+    target.classList.remove("hidden");
 
     targetSpawnedAt =
         performance.now();
@@ -225,7 +403,8 @@ function spawnTarget() {
 
 
 function hitTarget(event) {
-    if (!running) {
+
+    if (!flickRunning) {
         return;
     }
 
@@ -244,24 +423,21 @@ function hitTarget(event) {
     hitsElement.textContent =
         hits;
 
-    updateStats();
+    updateFlickStats();
 
-    target.classList.add(
-        "hidden"
-    );
+    target.classList.add("hidden");
 
     spawnTarget();
 }
 
 
 function registerMiss(event) {
-    if (!running) {
+
+    if (!flickRunning) {
         return;
     }
 
-    if (
-        event.target === target
-    ) {
+    if (event.target === target) {
         return;
     }
 
@@ -270,17 +446,16 @@ function registerMiss(event) {
     missesElement.textContent =
         misses;
 
-    updateStats();
+    updateFlickStats();
 }
 
 
 function calculateAccuracy() {
+
     const totalShots =
         hits + misses;
 
-    if (
-        totalShots === 0
-    ) {
+    if (totalShots === 0) {
         return 100;
     }
 
@@ -292,6 +467,7 @@ function calculateAccuracy() {
 
 
 function calculateScore() {
+
     if (
         reactionTimes.length === 0
     ) {
@@ -325,7 +501,8 @@ function calculateScore() {
 }
 
 
-function updateStats() {
+function updateFlickStats() {
+
     const accuracy =
         calculateAccuracy();
 
@@ -338,7 +515,8 @@ function updateStats() {
 
 
 function updateTimer() {
-    if (!running) {
+
+    if (!flickRunning) {
         return;
     }
 
@@ -358,19 +536,18 @@ function updateTimer() {
 }
 
 
-function finishGame() {
-    running = false;
+function finishFlickGame() {
 
-    target.classList.add(
-        "hidden"
-    );
+    flickRunning = false;
 
-    if (
-        animationFrame !== null
-    ) {
+    target.classList.add("hidden");
+
+    if (animationFrame !== null) {
+
         cancelAnimationFrame(
             animationFrame
         );
+
     }
 
     const finalScore =
@@ -410,21 +587,23 @@ function finishGame() {
     resultBest.textContent =
         `${Math.round(best)} ms`;
 
-    updatePersonalBest(
+    updateFlickPersonalBest(
         finalScore
     );
 
-    results.classList.remove(
-        "hidden"
-    );
+    topStats.classList.add("hidden");
+    bottomStats.classList.add("hidden");
+
+    flickResults.classList.remove("hidden");
 }
 
 
-function updatePersonalBest(score) {
+function updateFlickPersonalBest(score) {
+
     const stored =
         Number(
             localStorage.getItem(
-                "aimzip-best-score"
+                "aimzip-flick-best"
             )
         );
 
@@ -432,8 +611,9 @@ function updatePersonalBest(score) {
         !stored ||
         score > stored
     ) {
+
         localStorage.setItem(
-            "aimzip-best-score",
+            "aimzip-flick-best",
             String(score)
         );
 
@@ -448,20 +628,24 @@ function updatePersonalBest(score) {
 }
 
 
-function loadPersonalBest() {
+function loadFlickPersonalBest() {
+
     const stored =
         localStorage.getItem(
-            "aimzip-best-score"
+            "aimzip-flick-best"
         );
 
     if (stored) {
+
         personalBest.textContent =
             stored;
+
     }
 }
 
 
-function resetStats() {
+function resetFlickStats() {
+
     scoreElement.textContent =
         "0";
 
@@ -479,14 +663,289 @@ function resetStats() {
 }
 
 
-startButton.addEventListener(
+/* ========================================
+   REACTION
+   ======================================== */
+
+function startReactionGame() {
+
+    hideAllScreens();
+
+    topStats.classList.add("hidden");
+    bottomStats.classList.add("hidden");
+
+    reactionArea.classList.remove("hidden");
+
+    reactionRunning = true;
+    reactionReady = false;
+
+    reactionRound = 0;
+
+    reactionTotalRounds =
+        Number(
+            reactionRoundsSelect.value
+        );
+
+    reactionResultsArray = [];
+    falseStarts = 0;
+
+    reactionMessage.textContent =
+        "Preparado...";
+
+    startReactionRound();
+}
+
+
+function startReactionRound() {
+
+    if (
+        reactionRound >=
+        reactionTotalRounds
+    ) {
+
+        finishReactionGame();
+
+        return;
+    }
+
+    reactionReady = false;
+
+    reactionTarget.classList.add("hidden");
+
+    reactionMessage.textContent =
+        `Ronda ${reactionRound + 1} / ${reactionTotalRounds} · esperá...`;
+
+    const delay =
+        1200 +
+        Math.random() *
+        2800;
+
+    reactionTimeout =
+        setTimeout(
+            showReactionTarget,
+            delay
+        );
+}
+
+
+function showReactionTarget() {
+
+    if (!reactionRunning) {
+        return;
+    }
+
+    const arenaRect =
+        arena.getBoundingClientRect();
+
+    const size =
+        110;
+
+    const padding =
+        size / 2 + 30;
+
+    const x =
+        padding +
+        Math.random() *
+        (
+            arenaRect.width -
+            padding * 2
+        );
+
+    const y =
+        padding +
+        Math.random() *
+        (
+            arenaRect.height -
+            padding * 2
+        );
+
+    reactionTarget.style.left =
+        `${x}px`;
+
+    reactionTarget.style.top =
+        `${y}px`;
+
+    reactionMessage.textContent =
+        "";
+
+    reactionTarget.classList.remove("hidden");
+
+    reactionReady = true;
+
+    reactionAppearedAt =
+        performance.now();
+}
+
+
+function hitReactionTarget(event) {
+
+    if (
+        !reactionRunning ||
+        !reactionReady
+    ) {
+        return;
+    }
+
+    event.stopPropagation();
+
+    const time =
+        performance.now() -
+        reactionAppearedAt;
+
+    reactionResultsArray.push(
+        time
+    );
+
+    reactionRound += 1;
+
+    reactionReady = false;
+
+    reactionTarget.classList.add("hidden");
+
+    reactionMessage.textContent =
+        `${Math.round(time)} ms`;
+
+    setTimeout(
+        startReactionRound,
+        850
+    );
+}
+
+
+function reactionFalseStart() {
+
+    if (
+        !reactionRunning ||
+        reactionReady
+    ) {
+        return;
+    }
+
+    clearTimeout(
+        reactionTimeout
+    );
+
+    falseStarts += 1;
+
+    reactionMessage.textContent =
+        "Muy pronto";
+
+    setTimeout(
+        startReactionRound,
+        900
+    );
+}
+
+
+function finishReactionGame() {
+
+    reactionRunning = false;
+    reactionReady = false;
+
+    reactionArea.classList.add("hidden");
+    reactionTarget.classList.add("hidden");
+
+    const average =
+        reactionResultsArray.reduce(
+            (sum, value) =>
+                sum + value,
+            0
+        ) /
+        reactionResultsArray.length;
+
+    const best =
+        Math.min(
+            ...reactionResultsArray
+        );
+
+    const worst =
+        Math.max(
+            ...reactionResultsArray
+        );
+
+    reactionAverage.textContent =
+        `${Math.round(average)} ms`;
+
+    reactionBest.textContent =
+        `${Math.round(best)} ms`;
+
+    reactionWorst.textContent =
+        `${Math.round(worst)} ms`;
+
+    reactionResultRounds.textContent =
+        reactionResultsArray.length;
+
+    reactionFalseStarts.textContent =
+        falseStarts;
+
+    updateReactionRecord(
+        best
+    );
+
+    reactionResults.classList.remove("hidden");
+}
+
+
+function updateReactionRecord(best) {
+
+    const stored =
+        Number(
+            localStorage.getItem(
+                "aimzip-reaction-best"
+            )
+        );
+
+    if (
+        !stored ||
+        best < stored
+    ) {
+
+        localStorage.setItem(
+            "aimzip-reaction-best",
+            String(best)
+        );
+
+        reactionRecord.textContent =
+            `${Math.round(best)} ms`;
+
+        return;
+    }
+
+    reactionRecord.textContent =
+        `${Math.round(stored)} ms`;
+}
+
+
+function loadReactionRecord() {
+
+    const stored =
+        localStorage.getItem(
+            "aimzip-reaction-best"
+        );
+
+    if (stored) {
+
+        reactionRecord.textContent =
+            `${Math.round(
+                Number(stored)
+            )} ms`;
+
+    }
+}
+
+
+/* ========================================
+   EVENTOS
+   ======================================== */
+
+flickStartButton.addEventListener(
     "click",
-    startGame
+    startFlickGame
 );
 
-restartButton.addEventListener(
+flickRestartButton.addEventListener(
     "click",
-    startGame
+    startFlickGame
 );
 
 target.addEventListener(
@@ -496,7 +955,51 @@ target.addEventListener(
 
 arena.addEventListener(
     "pointerdown",
-    registerMiss
+    event => {
+
+        registerMiss(event);
+
+    }
 );
 
-loadPersonalBest();
+
+reactionStartButton.addEventListener(
+    "click",
+    startReactionGame
+);
+
+reactionRestartButton.addEventListener(
+    "click",
+    startReactionGame
+);
+
+reactionTarget.addEventListener(
+    "pointerdown",
+    hitReactionTarget
+);
+
+reactionArea.addEventListener(
+    "pointerdown",
+    event => {
+
+        if (
+            event.target !==
+            reactionTarget
+        ) {
+
+            reactionFalseStart();
+
+        }
+
+    }
+);
+
+
+/* ========================================
+   INICIO
+   ======================================== */
+
+loadFlickPersonalBest();
+loadReactionRecord();
+
+showModeScreen();
