@@ -28,7 +28,7 @@
                 AIM.ZIP
             </div>
 
-            <div class="top-stats">
+            <div class="top-stats" id="top-stats">
                 <span>
                     SCORE
                     <strong id="score">0</strong>
@@ -45,14 +45,117 @@
 
             <div id="arena" class="arena">
 
-                <div id="start-screen" class="overlay">
-                    <p class="mode-label">FLICK TRAINING</p>
+                <!-- Selector de modos -->
+                <div id="mode-screen" class="overlay">
+
+                    <p class="mode-label">
+                        AIM TRAINER
+                    </p>
 
                     <h1>Aim.zip</h1>
 
                     <p class="description">
-                        Destruí todos los objetivos lo más rápido posible.
-                        Cada click fallado reduce tu precisión.
+                        Elegí un modo y empezá a entrenar.
+                    </p>
+
+                    <div class="mode-grid">
+
+                        <button
+                            class="mode-card"
+                            data-mode="flick"
+                        >
+                            <span class="mode-number">01</span>
+
+                            <strong>Flick</strong>
+
+                            <p>
+                                Objetivos aleatorios para practicar
+                                velocidad y precisión.
+                            </p>
+
+                            <span class="mode-status available">
+                                disponible
+                            </span>
+                        </button>
+
+                        <button
+                            class="mode-card"
+                            data-mode="reaction"
+                        >
+                            <span class="mode-number">02</span>
+
+                            <strong>Reaction</strong>
+
+                            <p>
+                                Medí cuánto tardás en reaccionar
+                                cuando aparece el objetivo.
+                            </p>
+
+                            <span class="mode-status available">
+                                disponible
+                            </span>
+                        </button>
+
+                        <button
+                            class="mode-card locked"
+                            disabled
+                        >
+                            <span class="mode-number">03</span>
+
+                            <strong>Tracking</strong>
+
+                            <p>
+                                Seguí un objetivo en movimiento
+                                sin perderlo.
+                            </p>
+
+                            <span class="mode-status">
+                                próximamente
+                            </span>
+                        </button>
+
+                        <button
+                            class="mode-card locked"
+                            disabled
+                        >
+                            <span class="mode-number">04</span>
+
+                            <strong>Prefire</strong>
+
+                            <p>
+                                Practicá ángulos, colocación de mira
+                                y aparición de enemigos.
+                            </p>
+
+                            <span class="mode-status">
+                                próximamente
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Configuración Flick -->
+                <div
+                    id="flick-screen"
+                    class="overlay hidden"
+                >
+
+                    <button class="back-mode-button">
+                        ← modos
+                    </button>
+
+                    <p class="mode-label">
+                        FLICK TRAINING
+                    </p>
+
+                    <h2>Flick</h2>
+
+                    <p class="description">
+                        Destruí todos los objetivos lo más rápido
+                        posible. Cada click fallado reduce tu precisión.
                     </p>
 
                     <div class="settings">
@@ -80,11 +183,62 @@
 
                     </div>
 
-                    <button id="start-button" class="main-button">
+                    <button
+                        id="flick-start-button"
+                        class="main-button"
+                    >
                         Empezar
                     </button>
+
                 </div>
 
+
+                <!-- Configuración Reaction -->
+                <div
+                    id="reaction-screen"
+                    class="overlay hidden"
+                >
+
+                    <button class="back-mode-button">
+                        ← modos
+                    </button>
+
+                    <p class="mode-label">
+                        REACTION TRAINING
+                    </p>
+
+                    <h2>Reaction</h2>
+
+                    <p class="description">
+                        Esperá a que aparezca el objetivo.
+                        Si disparás antes, cuenta como salida falsa.
+                    </p>
+
+                    <div class="settings">
+
+                        <label>
+                            Rondas
+
+                            <select id="reaction-rounds">
+                                <option value="3">3</option>
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                    <button
+                        id="reaction-start-button"
+                        class="main-button"
+                    >
+                        Empezar
+                    </button>
+
+                </div>
+
+
+                <!-- Cuenta atrás Flick -->
                 <div
                     id="countdown"
                     class="countdown hidden"
@@ -92,6 +246,8 @@
                     3
                 </div>
 
+
+                <!-- Target Flick -->
                 <button
                     id="target"
                     class="target hidden"
@@ -100,12 +256,33 @@
                     <span></span>
                 </button>
 
+
+                <!-- Reaction -->
                 <div
-                    id="results"
+                    id="reaction-area"
+                    class="reaction-area hidden"
+                >
+                    <p id="reaction-message">
+                        Esperá...
+                    </p>
+
+                    <button
+                        id="reaction-target"
+                        class="reaction-target hidden"
+                        aria-label="Objetivo de reacción"
+                    >
+                    </button>
+                </div>
+
+
+                <!-- Resultados Flick -->
+                <div
+                    id="flick-results"
                     class="overlay hidden"
                 >
+
                     <p class="mode-label">
-                        RESULTADOS
+                        FLICK RESULTS
                     </p>
 
                     <h2>Partida terminada</h2>
@@ -149,17 +326,92 @@
                         <strong id="personal-best">--</strong>
                     </p>
 
-                    <button
-                        id="restart-button"
-                        class="main-button"
-                    >
-                        Jugar de nuevo
-                    </button>
+                    <div class="result-actions">
+                        <button
+                            id="flick-restart-button"
+                            class="main-button"
+                        >
+                            Jugar de nuevo
+                        </button>
+
+                        <button
+                            class="secondary-button go-modes"
+                        >
+                            Volver a modos
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- Resultados Reaction -->
+                <div
+                    id="reaction-results"
+                    class="overlay hidden"
+                >
+
+                    <p class="mode-label">
+                        REACTION RESULTS
+                    </p>
+
+                    <h2>Resultados</h2>
+
+                    <div class="results-grid">
+
+                        <div>
+                            <span>Promedio</span>
+                            <strong id="reaction-average">0 ms</strong>
+                        </div>
+
+                        <div>
+                            <span>Mejor</span>
+                            <strong id="reaction-best">0 ms</strong>
+                        </div>
+
+                        <div>
+                            <span>Peor</span>
+                            <strong id="reaction-worst">0 ms</strong>
+                        </div>
+
+                        <div>
+                            <span>Rondas</span>
+                            <strong id="reaction-result-rounds">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Falsas</span>
+                            <strong id="reaction-false-starts">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Récord</span>
+                            <strong id="reaction-record">--</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="result-actions">
+                        <button
+                            id="reaction-restart-button"
+                            class="main-button"
+                        >
+                            Jugar de nuevo
+                        </button>
+
+                        <button
+                            class="secondary-button go-modes"
+                        >
+                            Volver a modos
+                        </button>
+                    </div>
+
                 </div>
 
             </div>
 
-            <div class="bottom-stats">
+
+            <!-- Stats de Flick -->
+            <div id="bottom-stats" class="bottom-stats">
 
                 <div>
                     <span>TIME</span>
