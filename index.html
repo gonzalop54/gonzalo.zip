@@ -1,41 +1,99 @@
-<main class="home">
+<!DOCTYPE html>
+<html lang="es">
 
-    <header class="hero">
-        <h1>gonzalo.zip</h1>
-        <p>Pequeñas cosas que hago por acá.</p>
-    </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <section class="experiments">
+    <title>gonzalo.zip</title>
 
-        <div class="section-header">
-            <span>experimentos</span>
-            <span>001</span>
-        </div>
+    <meta
+        name="description"
+        content="Un rincón de internet donde hago experimentos, páginas random y otras cosas."
+    >
 
-        <a href="./pages/boton/" class="experiment-card">
-            <div class="experiment-info">
-                <span class="experiment-number">#001</span>
+    <link rel="stylesheet" href="css/main.css">
+</head>
 
-                <div>
-                    <h2>El botón imposible</h2>
-                    <p>Un botón que no quiere que lo pulses.</p>
-                </div>
+<body>
+
+    <main class="home">
+
+        <header class="hero">
+            <p class="eyebrow">archivo personal</p>
+
+            <h1>gonzalo.zip</h1>
+
+            <p class="hero-description">
+                Un rincón de internet donde pruebo cosas,
+                hago experimentos y subo cualquier idea random.
+            </p>
+        </header>
+
+        <section class="experiments">
+
+            <div class="section-header">
+                <h2>Experimentos</h2>
+                <span>001 disponible</span>
             </div>
 
-            <span class="experiment-arrow">→</span>
-        </a>
+            <div class="experiment-list">
 
-        <div class="experiment-card disabled">
-            <div class="experiment-info">
-                <span class="experiment-number">#002</span>
+                <a
+                    class="experiment-card"
+                    href="pages/boton/"
+                >
+                    <div class="experiment-number">
+                        #001
+                    </div>
 
-                <div>
-                    <h2>Próximamente</h2>
-                    <p>Algo aparecerá por acá.</p>
+                    <div class="experiment-content">
+                        <h3>El botón imposible</h3>
+
+                        <p>
+                            Un botón que no quiere que lo pulses.
+                        </p>
+                    </div>
+
+                    <div class="experiment-arrow">
+                        →
+                    </div>
+                </a>
+
+                <div class="experiment-card experiment-card-disabled">
+
+                    <div class="experiment-number">
+                        #002
+                    </div>
+
+                    <div class="experiment-content">
+                        <h3>Próximamente</h3>
+
+                        <p>
+                            Todavía no sé qué va a haber acá.
+                        </p>
+                    </div>
+
+                    <div class="experiment-status">
+                        ...
+                    </div>
+
                 </div>
+
             </div>
-        </div>
 
-    </section>
+        </section>
 
-</main>
+        <footer class="site-footer">
+            <p>
+                hecho por Gonzalo · probablemente sin ningún motivo
+            </p>
+        </footer>
+
+    </main>
+
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
