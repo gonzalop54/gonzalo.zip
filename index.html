@@ -1,22 +1,292 @@
-<!-- ENTRY SCREEN -->
-<div class="entry-screen" id="entryScreen">
+<!DOCTYPE html>
+<html lang="es">
 
-    <div class="entry-content">
+<head>
+    <meta charset="UTF-8">
 
-        <p class="entry-logo">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>gonzalo.zip</title>
+
+    <meta
+        name="description"
+        content="somewhere after midnight."
+    >
+
+    <!-- PRELOAD BACKGROUND -->
+    <link
+        rel="preload"
+        as="image"
+        href="fondo.png"
+        fetchpriority="high"
+    >
+
+    <!-- GOOGLE FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- ==============================
+         BACKGROUND MUSIC
+    =============================== -->
+
+    <audio
+        id="backgroundMusic"
+        src="fondoreducido.mp3"
+        preload="metadata"
+        loop
+    ></audio>
+
+
+    <!-- ==============================
+         BACKGROUND
+    =============================== -->
+
+    <div class="background"></div>
+
+    <div class="overlay"></div>
+
+
+    <!-- ==============================
+         TOP BAR
+    =============================== -->
+
+    <header class="topbar">
+
+        <a
+            class="logo"
+            href="/"
+        >
             gonzalo.zip<span>.</span>
+        </a>
+
+
+        <div class="status">
+
+            <span id="temperature">
+                24°C
+            </span>
+
+            <span class="separator">
+                |
+            </span>
+
+            <span id="clock">
+                --:--
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         MAIN
+    =============================== -->
+
+    <main class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                gonzalo.zip
+            </h1>
+
+
+            <div class="red-line"></div>
+
+
+            <p class="subtitle">
+                somewhere after midnight.
+            </p>
+
+
+            <!-- LINKS -->
+
+            <nav class="socials">
+
+
+                <!-- INSTAGRAM -->
+
+                <a
+                    href="https://www.instagram.com/gonzalop54/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    instagram
+                </a>
+
+
+                <span>/</span>
+
+
+                <!-- SPOTIFY -->
+
+                <button
+                    class="spotify-trigger"
+                    id="spotifyTrigger"
+                    type="button"
+                >
+                    spotify
+                </button>
+
+
+                <span>/</span>
+
+
+                <!-- YOUTUBE -->
+
+                <a
+                    href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    youtube
+                </a>
+
+
+                <span>/</span>
+
+
+                <!-- MAIL DECORATIVO -->
+
+                <a
+                    href="#"
+                    onclick="return false;"
+                    aria-label="mail"
+                >
+                    mail
+                </a>
+
+            </nav>
+
+
+            <!-- AUDIO VISUAL -->
+
+            <div
+                class="audio-mark"
+                aria-hidden="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==============================
+         FOOTER
+    =============================== -->
+
+    <footer class="footer">
+
+        <p>
+            bass is a feeling<span>.</span>
         </p>
 
-        <button
-            class="entry-button"
-            id="entryButton"
-            type="button"
+        <p>
+            currently driving<span>.</span>
+        </p>
+
+        <p>
+            keep the streets empty<span>.</span>
+        </p>
+
+    </footer>
+
+
+    <!-- ==============================
+         SPOTIFY MODAL
+    =============================== -->
+
+    <div
+        class="spotify-modal"
+        id="spotifyModal"
+        aria-hidden="true"
+    >
+
+        <!-- DARK BACKGROUND -->
+
+        <div
+            class="spotify-backdrop"
+            id="spotifyBackdrop"
+        ></div>
+
+
+        <!-- PLAYER -->
+
+        <div
+            class="spotify-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Spotify playlist"
         >
-            <span class="entry-line"></span>
-            enter
-            <span class="entry-line"></span>
-        </button>
+
+            <button
+                class="spotify-close"
+                id="spotifyClose"
+                type="button"
+                aria-label="cerrar"
+            >
+                ×
+            </button>
+
+
+            <div class="spotify-label">
+                night transmission<span>.</span>
+            </div>
+
+
+            <iframe
+                src="https://open.spotify.com/embed/playlist/34KWfW88GK15EPBo6jM2Wa?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Spotify playlist"
+            ></iframe>
+
+        </div>
 
     </div>
 
-</div>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
