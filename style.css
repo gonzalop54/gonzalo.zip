@@ -226,28 +226,111 @@ body {
 }
 
 
-.red-line {
-    width: 32px;
-    height: 1px;
+/* =========================
+   MUSIC CONTROL
+========================= */
 
+.music-control {
     margin: 28px auto;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.music-line {
+    width: 28px;
+    height: 1px;
 
     background: var(--red);
 
+    opacity: 0.65;
+
+    box-shadow:
+        0 0 8px
+        rgba(255, 0, 0, 0.35);
+
+    transition:
+        width 0.3s ease,
+        opacity 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.music-button {
+    appearance: none;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #777;
+
+    font-family: inherit;
+
+    font-size: 9px;
+
+    font-weight: 300;
+
+    letter-spacing: 4px;
+
+    text-transform: lowercase;
+
+    cursor: pointer;
+
+    padding: 4px 0;
+
+    transition:
+        color 0.25s ease,
+        letter-spacing 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+
+.music-control:hover
+.music-button {
+    color: #fff;
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 0 10px
+        rgba(255, 255, 255, 0.25);
+}
+
+
+.music-control:hover
+.music-line {
+    width: 38px;
+
+    opacity: 1;
+
     box-shadow:
         0 0 10px
-        rgba(255, 0, 0, 0.45);
+        rgba(255, 26, 26, 0.6);
 }
 
 
-.subtitle {
-    color: #888;
+/* CUANDO ESTÁ SONANDO */
 
-    font-size: 14px;
-
-    letter-spacing: 7px;
+.music-control.playing
+.music-button {
+    color: #aaa;
 }
 
+
+.music-control.playing
+.music-line {
+    opacity: 1;
+
+    box-shadow:
+        0 0 10px
+        rgba(255, 26, 26, 0.7);
+}
 
 /* =========================
    SOCIAL LINKS
