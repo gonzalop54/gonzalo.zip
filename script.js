@@ -1,4 +1,41 @@
 /* =========================
+   ENTRY SCREEN
+========================= */
+
+const entryScreen =
+    document.querySelector("#entryScreen");
+
+const entryButton =
+    document.querySelector("#entryButton");
+
+
+if (
+    entryScreen &&
+    entryButton
+) {
+
+    entryButton.addEventListener(
+        "click",
+        () => {
+
+            entryScreen.classList.add(
+                "hidden"
+            );
+
+
+            setTimeout(() => {
+
+                entryScreen.remove();
+
+            }, 850);
+
+        }
+    );
+
+}
+
+
+/* =========================
    CLOCK
 ========================= */
 
@@ -32,12 +69,6 @@ function updateClock() {
 updateClock();
 
 
-/*
-    Como solo mostramos horas y minutos,
-    no necesitamos actualizarlo cada segundo.
-    Una vez cada 30 segundos es suficiente.
-*/
-
 setInterval(
     updateClock,
     30000
@@ -54,9 +85,6 @@ const temperature =
 
 /*
     Por ahora estática.
-
-    Más adelante podemos hacer que
-    muestre la temperatura real.
 */
 
 temperature.textContent =
@@ -83,8 +111,6 @@ const spotifyBackdrop =
     document.querySelector("#spotifyBackdrop");
 
 
-/* OPEN */
-
 function openSpotify() {
 
     spotifyModal.classList.add(
@@ -102,8 +128,6 @@ function openSpotify() {
         "hidden";
 }
 
-
-/* CLOSE */
 
 function closeSpotify() {
 
@@ -123,15 +147,11 @@ function closeSpotify() {
 }
 
 
-/* SPOTIFY BUTTON */
-
 spotifyTrigger.addEventListener(
     "click",
     openSpotify
 );
 
-
-/* CLOSE BUTTON */
 
 spotifyClose.addEventListener(
     "click",
@@ -139,15 +159,11 @@ spotifyClose.addEventListener(
 );
 
 
-/* CLICK OUTSIDE */
-
 spotifyBackdrop.addEventListener(
     "click",
     closeSpotify
 );
 
-
-/* ESC */
 
 document.addEventListener(
     "keydown",
