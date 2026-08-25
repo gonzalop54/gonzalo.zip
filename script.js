@@ -1,6 +1,6 @@
-/* =========================
-   ENTRY SCREEN
-========================= */
+/* =========================================
+   ELEMENTS
+========================================= */
 
 const entryScreen =
     document.querySelector("#entryScreen");
@@ -8,40 +8,148 @@ const entryScreen =
 const entryButton =
     document.querySelector("#entryButton");
 
+const backgroundMusic =
+    document.querySelector("#backgroundMusic");
+
+const clock =
+    document.querySelector("#clock");
+
+const temperature =
+    document.querySelector("#temperature");
+
+const spotifyTrigger =
+    document.querySelector("#spotifyTrigger");
+
+const spotifyModal =
+    document.querySelector("#spotifyModal");
+
+const spotifyClose =
+    document.querySelector("#spotifyClose");
+
+const spotifyBackdrop =
+    document.querySelector("#spotifyBackdrop");
+
+
+/* =========================================
+   BACKGROUND MUSIC
+========================================= */
+
+/*
+   Volumen:
+   0 = silencio
+   1 = máximo
+
+   0.25 queda bastante bien como
+   música ambiental.
+*/
+
+if (backgroundMusic) {
+
+    backgroundMusic.volume =
+        0.25;
+
+}
+
+
+/*
+   Guardamos si la música estaba
+   reproduciéndose antes de abrir
+   Spotify.
+
+   Así solo la reanudamos si
+   realmente estaba sonando.
+*/
+
+let musicWasPlaying =
+    false;
+
+
+/* =========================================
+   ENTRY SCREEN
+========================================= */
+
+async function enterWebsite() {
+
+    /*
+       Marcamos la página como activa.
+       Recién ahora comienzan las
+       animaciones de la interfaz.
+    */
+
+    document.body.classList.add(
+        "entered"
+    );
+
+
+    /*
+       Empezar música.
+
+       Como ocurre directamente después
+       del click del usuario, los navegadores
+       permiten reproducir audio.
+    */
+
+    if (backgroundMusic) {
+
+        try {
+
+            await backgroundMusic.play();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "No se pudo iniciar el audio:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+       Ocultamos pantalla inicial.
+    */
+
+    if (entryScreen) {
+
+        entryScreen.classList.add(
+            "hidden"
+        );
+
+
+        setTimeout(() => {
+
+            entryScreen.remove();
+
+        }, 800);
+
+    }
+
+}
+
 
 if (
-    entryScreen &&
-    entryButton
+    entryButton &&
+    entryScreen
 ) {
 
     entryButton.addEventListener(
         "click",
-        () => {
-
-            entryScreen.classList.add(
-                "hidden"
-            );
-
-
-            setTimeout(() => {
-
-                entryScreen.remove();
-
-            }, 850);
-
+        enterWebsite,
+        {
+            once: true
         }
     );
 
 }
 
 
-/* =========================
+/* =========================================
    CLOCK
-========================= */
-
-const clock =
-    document.querySelector("#clock");
-
+========================================= */
 
 function updateClock() {
 
@@ -52,22 +160,38 @@ function updateClock() {
     const hours =
         String(
             now.getHours()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const minutes =
         String(
             now.getMinutes()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
-    clock.textContent =
-        `${hours}:${minutes}`;
+    if (clock) {
+
+        clock.textContent =
+            `${hours}:${minutes}`;
+
+    }
+
 }
 
 
 updateClock();
 
+
+/*
+   Solo necesitamos comprobar cada
+   30 segundos.
+*/
 
 setInterval(
     updateClock,
@@ -75,43 +199,52 @@ setInterval(
 );
 
 
-/* =========================
+/* =========================================
    TEMPERATURE
-========================= */
+========================================= */
 
-const temperature =
-    document.querySelector("#temperature");
+if (temperature) {
 
+    temperature.textContent =
+        "24°C";
 
-/*
-    Por ahora estática.
-*/
-
-temperature.textContent =
-    "24°C";
+}
 
 
-/* =========================
-   SPOTIFY MODAL
-========================= */
-
-const spotifyTrigger =
-    document.querySelector("#spotifyTrigger");
-
-
-const spotifyModal =
-    document.querySelector("#spotifyModal");
-
-
-const spotifyClose =
-    document.querySelector("#spotifyClose");
-
-
-const spotifyBackdrop =
-    document.querySelector("#spotifyBackdrop");
-
+/* =========================================
+   OPEN SPOTIFY
+========================================= */
 
 function openSpotify() {
+
+    if (!spotifyModal) {
+        return;
+    }
+
+
+    /*
+       Comprobamos si la música estaba
+       sonando.
+    */
+
+    if (backgroundMusic) {
+
+        musicWasPlaying =
+            !backgroundMusic.paused;
+
+
+        /*
+           Pausar la música ambiental.
+        */
+
+        if (musicWasPlaying) {
+
+            backgroundMusic.pause();
+
+        }
+
+    }
+
 
     spotifyModal.classList.add(
         "active"
@@ -123,13 +256,19 @@ function openSpotify() {
         "false"
     );
 
-
-    document.body.style.overflow =
-        "hidden";
 }
 
 
-function closeSpotify() {
+/* =========================================
+   CLOSE SPOTIFY
+========================================= */
+
+async function closeSpotify() {
+
+    if (!spotifyModal) {
+        return;
+    }
+
 
     spotifyModal.classList.remove(
         "active"
@@ -142,28 +281,78 @@ function closeSpotify() {
     );
 
 
-    document.body.style.overflow =
-        "";
+    /*
+       Si la música estaba sonando
+       antes de abrir Spotify,
+       continúa desde el mismo punto.
+    */
+
+    if (
+        backgroundMusic &&
+        musicWasPlaying
+    ) {
+
+        try {
+
+            await backgroundMusic.play();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "No se pudo reanudar el audio:",
+                error
+            );
+
+        }
+
+    }
+
+
+    musicWasPlaying =
+        false;
+
 }
 
 
-spotifyTrigger.addEventListener(
-    "click",
-    openSpotify
-);
+/* =========================================
+   SPOTIFY EVENTS
+========================================= */
+
+if (spotifyTrigger) {
+
+    spotifyTrigger.addEventListener(
+        "click",
+        openSpotify
+    );
+
+}
 
 
-spotifyClose.addEventListener(
-    "click",
-    closeSpotify
-);
+if (spotifyClose) {
+
+    spotifyClose.addEventListener(
+        "click",
+        closeSpotify
+    );
+
+}
 
 
-spotifyBackdrop.addEventListener(
-    "click",
-    closeSpotify
-);
+if (spotifyBackdrop) {
 
+    spotifyBackdrop.addEventListener(
+        "click",
+        closeSpotify
+    );
+
+}
+
+
+/* =========================================
+   ESC
+========================================= */
 
 document.addEventListener(
     "keydown",
@@ -171,6 +360,7 @@ document.addEventListener(
 
         if (
             event.key === "Escape" &&
+            spotifyModal &&
             spotifyModal.classList.contains(
                 "active"
             )
@@ -182,3 +372,17 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================
+   PAGE VISIBILITY
+========================================= */
+
+/*
+   Si el usuario cambia de pestaña,
+   dejamos que el navegador maneje
+   normalmente el audio.
+
+   No hacemos cálculos ni animaciones
+   adicionales.
+*/
