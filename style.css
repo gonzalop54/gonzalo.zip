@@ -1,3 +1,7 @@
+/* =========================================
+   VARIABLES
+========================================= */
+
 :root {
     --white: #e6e6e6;
     --muted: #777;
@@ -6,9 +10,9 @@
 }
 
 
-/* =========================
+/* =========================================
    RESET
-========================= */
+========================================= */
 
 * {
     margin: 0;
@@ -24,8 +28,14 @@ body {
 }
 
 
+html {
+    background: var(--background);
+}
+
+
 body {
     min-height: 100vh;
+    min-height: 100dvh;
 
     background: var(--background);
 
@@ -38,19 +48,19 @@ body {
     overflow: hidden;
 
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
 
 
-/* =========================
+/* =========================================
    ENTRY SCREEN
-========================= */
+========================================= */
 
 .entry-screen {
     position: fixed;
     inset: 0;
 
     width: 100%;
+    height: 100vh;
     height: 100dvh;
 
     display: flex;
@@ -62,8 +72,8 @@ body {
     z-index: 9999;
 
     transition:
-        opacity 0.8s ease,
-        visibility 0.8s ease;
+        opacity 0.75s ease,
+        visibility 0.75s ease;
 }
 
 
@@ -84,6 +94,8 @@ body {
 }
 
 
+/* LOGO */
+
 .entry-logo {
     color: #888;
 
@@ -91,12 +103,6 @@ body {
     font-weight: 300;
 
     letter-spacing: 7px;
-
-    opacity: 0;
-
-    animation:
-        entryAppear 1s ease
-        0.15s forwards;
 }
 
 
@@ -104,6 +110,8 @@ body {
     color: var(--red);
 }
 
+
+/* ENTER BUTTON */
 
 .entry-button {
     appearance: none;
@@ -130,15 +138,9 @@ body {
 
     cursor: pointer;
 
-    opacity: 0;
-
-    animation:
-        entryAppear 1s ease
-        0.5s forwards;
-
     transition:
-        color 0.3s ease,
-        letter-spacing 0.4s ease;
+        color 0.25s ease,
+        letter-spacing 0.3s ease;
 }
 
 
@@ -157,53 +159,34 @@ body {
         rgba(255, 255, 255, 0.15);
 
     transition:
-        width 0.4s ease,
-        background 0.4s ease,
-        box-shadow 0.4s ease;
+        width 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 
-.entry-button:hover
-.entry-line {
+.entry-button:hover .entry-line {
     width: 42px;
 
     background: var(--red);
 
     box-shadow:
         0 0 10px
-        rgba(255, 26, 26, 0.5);
+        rgba(255, 26, 26, 0.45);
 }
 
 
-.entry-button::after {
-    content: "";
-
-    width: 3px;
-    height: 3px;
-
-    margin-left: -10px;
-
-    border-radius: 50%;
-
-    background: var(--red);
-
-    box-shadow:
-        0 0 8px
-        rgba(255, 26, 26, 0.7);
-
-    animation:
-        entryPulse 2s ease-in-out
-        infinite;
-}
-
-
-/* =========================
+/* =========================================
    BACKGROUND
-========================= */
+========================================= */
 
 .background {
     position: fixed;
     inset: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
 
     background-image:
         url("fondo.png");
@@ -212,14 +195,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 
-    transform: scale(1.02);
+    transform: scale(1.01);
 
-    will-change: transform;
-    backface-visibility: hidden;
+    pointer-events: none;
 
     z-index: -3;
 }
 
+
+/* =========================================
+   DARK OVERLAY
+========================================= */
 
 .overlay {
     position: fixed;
@@ -245,34 +231,9 @@ body {
 }
 
 
-/* =========================
-   LIGHTWEIGHT GRAIN
-========================= */
-
-.noise {
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.015;
-
-    background:
-        repeating-radial-gradient(
-            circle at 0 0,
-            rgba(255, 255, 255, 0.025) 0,
-            rgba(255, 255, 255, 0.025) 1px,
-            transparent 1px,
-            transparent 3px
-        );
-
-    z-index: 20;
-}
-
-
-/* =========================
+/* =========================================
    TOP BAR
-========================= */
+========================================= */
 
 .topbar {
     position: fixed;
@@ -293,6 +254,18 @@ body {
     letter-spacing: 5px;
 
     z-index: 10;
+
+    opacity: 0;
+}
+
+
+/* Solo aparece después de ENTER */
+
+body.entered .topbar {
+    animation:
+        interfaceAppear
+        0.9s ease
+        0.15s forwards;
 }
 
 
@@ -302,7 +275,7 @@ body {
     text-decoration: none;
 
     transition:
-        color 0.3s ease;
+        color 0.25s ease;
 }
 
 
@@ -330,13 +303,15 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero {
     width: 100%;
+
     height: 100vh;
+    height: 100dvh;
 
     display: flex;
 
@@ -350,11 +325,25 @@ body {
 .hero-content {
     position: relative;
 
-    transform: translateY(20px);
+    opacity: 0;
 
+    transform:
+        translateY(20px);
+}
+
+
+/*
+   IMPORTANTE:
+   esta animación NO corre durante
+   la pantalla inicial.
+*/
+
+body.entered .hero-content {
     animation:
-        appear 1.2s
+        heroAppear
+        1.1s
         cubic-bezier(.2, .8, .2, 1)
+        0.08s
         forwards;
 }
 
@@ -398,9 +387,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    SOCIAL LINKS
-========================= */
+========================================= */
 
 .socials {
     margin-top: 130px;
@@ -427,8 +416,8 @@ body {
     text-decoration: none;
 
     transition:
-        color 0.25s ease,
-        text-shadow 0.25s ease;
+        color 0.2s ease,
+        text-shadow 0.2s ease;
 }
 
 
@@ -447,9 +436,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    SPOTIFY BUTTON
-========================= */
+========================================= */
 
 .spotify-trigger {
     appearance: none;
@@ -468,9 +457,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    AUDIO MARK
-========================= */
+========================================= */
 
 .audio-mark {
     height: 22px;
@@ -488,40 +477,49 @@ body {
 
 .audio-mark span {
     width: 2px;
-    height: 5px;
+    height: 4px;
 
     background: var(--red);
+}
 
+
+/*
+   También se mantiene quieto hasta
+   pulsar ENTER.
+*/
+
+body.entered .audio-mark span {
     animation:
-        bass 1.1s
+        bass
+        1.1s
         ease-in-out
         infinite;
 }
 
 
-.audio-mark span:nth-child(2) {
+body.entered .audio-mark span:nth-child(2) {
     animation-delay: 0.15s;
 }
 
 
-.audio-mark span:nth-child(3) {
+body.entered .audio-mark span:nth-child(3) {
     animation-delay: 0.30s;
 }
 
 
-.audio-mark span:nth-child(4) {
+body.entered .audio-mark span:nth-child(4) {
     animation-delay: 0.45s;
 }
 
 
-.audio-mark span:nth-child(5) {
+body.entered .audio-mark span:nth-child(5) {
     animation-delay: 0.60s;
 }
 
 
-/* =========================
+/* =========================================
    FOOTER
-========================= */
+========================================= */
 
 .footer {
     position: fixed;
@@ -542,6 +540,16 @@ body {
     letter-spacing: 4px;
 
     color: #666;
+
+    opacity: 0;
+}
+
+
+body.entered .footer {
+    animation:
+        interfaceAppear
+        0.9s ease
+        0.3s forwards;
 }
 
 
@@ -560,9 +568,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    SPOTIFY MODAL
-========================= */
+========================================= */
 
 .spotify-modal {
     position: fixed;
@@ -581,8 +589,8 @@ body {
     pointer-events: none;
 
     transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease;
+        opacity 0.3s ease,
+        visibility 0.3s ease;
 
     z-index: 100;
 }
@@ -601,7 +609,7 @@ body {
     inset: 0;
 
     background:
-        rgba(0, 0, 0, 0.82);
+        rgba(0, 0, 0, 0.86);
 }
 
 
@@ -618,22 +626,21 @@ body {
         rgba(255, 255, 255, 0.08);
 
     background:
-        rgba(5, 6, 7, 0.96);
+        rgba(5, 6, 7, 0.98);
 
     box-shadow:
-        0 30px 100px
-        rgba(0, 0, 0, 0.75);
+        0 30px 90px
+        rgba(0, 0, 0, 0.7);
 
     transform:
-        translateY(20px)
-        scale(0.98);
+        translateY(14px);
 
     opacity: 0;
 
     transition:
-        transform 0.45s
+        transform 0.35s
         cubic-bezier(.2, .8, .2, 1),
-        opacity 0.45s ease;
+        opacity 0.35s ease;
 
     z-index: 1;
 }
@@ -642,8 +649,7 @@ body {
 .spotify-modal.active
 .spotify-panel {
     transform:
-        translateY(0)
-        scale(1);
+        translateY(0);
 
     opacity: 1;
 }
@@ -688,7 +694,7 @@ body {
     cursor: pointer;
 
     transition:
-        color 0.25s ease,
+        color 0.2s ease,
         transform 0.25s ease;
 }
 
@@ -696,7 +702,8 @@ body {
 .spotify-close:hover {
     color: #fff;
 
-    transform: rotate(90deg);
+    transform:
+        rotate(90deg);
 }
 
 
@@ -707,50 +714,17 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ANIMATIONS
-========================= */
+========================================= */
 
-@keyframes entryAppear {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-
-}
-
-
-@keyframes entryPulse {
-
-    0%,
-    100% {
-        opacity: 0.25;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-}
-
-
-@keyframes appear {
+@keyframes heroAppear {
 
     from {
         opacity: 0;
 
         transform:
-            translateY(35px);
+            translateY(32px);
     }
 
     to {
@@ -763,13 +737,26 @@ body {
 }
 
 
+@keyframes interfaceAppear {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
 @keyframes bass {
 
     0%,
     100% {
         height: 4px;
 
-        opacity: 0.4;
+        opacity: 0.35;
     }
 
     50% {
@@ -781,9 +768,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    MOBILE
-========================= */
+========================================= */
 
 @media (max-width: 700px) {
 
@@ -803,6 +790,12 @@ body {
 
     .entry-line {
         width: 22px;
+    }
+
+
+    .entry-button:hover
+    .entry-line {
+        width: 30px;
     }
 
 
@@ -908,23 +901,29 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    REDUCED MOTION
-========================= */
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration:
-            0.01ms !important;
+    body.entered .hero-content,
+    body.entered .topbar,
+    body.entered .footer {
+        animation: none;
 
-        animation-iteration-count:
-            1 !important;
+        opacity: 1;
+    }
 
-        transition-duration:
-            0.01ms !important;
+
+    body.entered .hero-content {
+        transform:
+            translateY(20px);
+    }
+
+
+    body.entered .audio-mark span {
+        animation: none;
     }
 
 }
