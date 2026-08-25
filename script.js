@@ -2,12 +2,6 @@
    ELEMENTS
 ========================================= */
 
-const entryScreen =
-    document.querySelector("#entryScreen");
-
-const entryButton =
-    document.querySelector("#entryButton");
-
 const backgroundMusic =
     document.querySelector("#backgroundMusic");
 
@@ -34,114 +28,125 @@ const spotifyBackdrop =
    BACKGROUND MUSIC
 ========================================= */
 
-/*
-   Volumen:
-   0 = silencio
-   1 = máximo
-
-   0.25 queda bastante bien como
-   música ambiental.
-*/
-
-if (backgroundMusic) {
-
-    backgroundMusic.volume =
-        0.25;
-
-}
-
-
-/*
-   Guardamos si la música estaba
-   reproduciéndose antes de abrir
-   Spotify.
-
-   Así solo la reanudamos si
-   realmente estaba sonando.
-*/
+let musicStarted =
+    false;
 
 let musicWasPlaying =
     false;
 
 
-/* =========================================
-   ENTRY SCREEN
-========================================= */
+/*
+   Intenta iniciar la música.
 
-async function enterWebsite() {
+   Los navegadores pueden bloquear audio
+   automático con sonido hasta que el
+   visitante interactúe con la página.
+*/
 
-    /*
-       Marcamos la página como activa.
-       Recién ahora comienzan las
-       animaciones de la interfaz.
-    */
+async function startBackgroundMusic() {
 
-    document.body.classList.add(
-        "entered"
-    );
-
-
-    /*
-       Empezar música.
-
-       Como ocurre directamente después
-       del click del usuario, los navegadores
-       permiten reproducir audio.
-    */
-
-    if (backgroundMusic) {
-
-        try {
-
-            await backgroundMusic.play();
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "No se pudo iniciar el audio:",
-                error
-            );
-
-        }
-
+    if (
+        !backgroundMusic ||
+        musicStarted
+    ) {
+        return;
     }
 
 
-    /*
-       Ocultamos pantalla inicial.
-    */
+    try {
 
-    if (entryScreen) {
+        await backgroundMusic.play();
 
-        entryScreen.classList.add(
-            "hidden"
-        );
+        musicStarted =
+            true;
 
+        removeMusicStartListeners();
 
-        setTimeout(() => {
+    }
 
-            entryScreen.remove();
+    catch (error) {
 
-        }, 800);
+        /*
+           Autoplay bloqueado.
+
+           No hacemos nada:
+           empezará con la primera
+           interacción del usuario.
+        */
 
     }
 
 }
 
 
-if (
-    entryButton &&
-    entryScreen
-) {
+/*
+   Quitamos los listeners una vez
+   que la música comenzó.
+*/
 
-    entryButton.addEventListener(
-        "click",
-        enterWebsite,
+function removeMusicStartListeners() {
+
+    document.removeEventListener(
+        "pointerdown",
+        startBackgroundMusic
+    );
+
+
+    document.removeEventListener(
+        "keydown",
+        startBackgroundMusic
+    );
+
+}
+
+
+/*
+   Configuración del audio.
+*/
+
+if (backgroundMusic) {
+
+    /*
+       0.25 = 25% de volumen.
+
+       Puedes cambiarlo:
+       0.15 = muy suave
+       0.25 = suave
+       0.40 = más presente
+    */
+
+    backgroundMusic.volume =
+        0.25;
+
+
+    /*
+       Primer intento:
+       reproducir al cargar.
+    */
+
+    startBackgroundMusic();
+
+
+    /*
+       Si el navegador bloqueó autoplay,
+       empezará con el primer click,
+       toque o tecla.
+
+       No hay botón ni mensaje.
+    */
+
+    document.addEventListener(
+        "pointerdown",
+        startBackgroundMusic,
         {
-            once: true
+            passive: true
         }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        startBackgroundMusic
     );
 
 }
@@ -189,8 +194,9 @@ updateClock();
 
 
 /*
-   Solo necesitamos comprobar cada
-   30 segundos.
+   Como no mostramos segundos,
+   no hace falta ejecutar código
+   cada segundo.
 */
 
 setInterval(
@@ -223,8 +229,8 @@ function openSpotify() {
 
 
     /*
-       Comprobamos si la música estaba
-       sonando.
+       Guardamos si la música ambiental
+       estaba sonando.
     */
 
     if (backgroundMusic) {
@@ -234,7 +240,8 @@ function openSpotify() {
 
 
         /*
-           Pausar la música ambiental.
+           Pausamos fondoreducido.mp3
+           mientras Spotify está abierto.
         */
 
         if (musicWasPlaying) {
@@ -282,9 +289,9 @@ async function closeSpotify() {
 
 
     /*
-       Si la música estaba sonando
-       antes de abrir Spotify,
-       continúa desde el mismo punto.
+       Si la música estaba reproduciéndose
+       antes de abrir Spotify, continúa
+       exactamente desde donde quedó.
     */
 
     if (
@@ -296,14 +303,18 @@ async function closeSpotify() {
 
             await backgroundMusic.play();
 
+            musicStarted =
+                true;
+
         }
 
         catch (error) {
 
-            console.log(
-                "No se pudo reanudar el audio:",
-                error
-            );
+            /*
+               Si algún navegador bloquea
+               la reanudación, no rompemos
+               el resto de la página.
+            */
 
         }
 
@@ -351,7 +362,7 @@ if (spotifyBackdrop) {
 
 
 /* =========================================
-   ESC
+   ESC KEY
 ========================================= */
 
 document.addEventListener(
@@ -372,17 +383,3 @@ document.addEventListener(
 
     }
 );
-
-
-/* =========================================
-   PAGE VISIBILITY
-========================================= */
-
-/*
-   Si el usuario cambia de pestaña,
-   dejamos que el navegador maneje
-   normalmente el audio.
-
-   No hacemos cálculos ni animaciones
-   adicionales.
-*/
