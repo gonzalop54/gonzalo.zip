@@ -45,22 +45,76 @@ setInterval(
 
 
 /* =========================
-   TEMPERATURE
+   TEMPERATURE — BUENOS AIRES
 ========================= */
 
 const temperature =
     document.querySelector("#temperature");
 
 
-/*
-    Por ahora estática.
+async function updateTemperature() {
 
-    Más adelante podemos hacer que
-    muestre la temperatura real.
+    try {
+
+        const response = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=-34.6037&longitude=-58.3816&current=temperature_2m&timezone=America%2FArgentina%2FBuenos_Aires"
+        );
+
+
+        if (!response.ok) {
+            throw new Error("Weather request failed");
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const currentTemperature =
+            Math.round(
+                data.current.temperature_2m
+            );
+
+
+        temperature.textContent =
+            `${currentTemperature}°C`;
+
+    }
+
+    catch (error) {
+
+        /*
+            Si por algún motivo no se puede
+            consultar el clima, mostramos "--"
+            en vez de romper la página.
+        */
+
+        temperature.textContent =
+            "--°C";
+
+        console.error(
+            "No se pudo obtener la temperatura:",
+            error
+        );
+
+    }
+
+}
+
+
+/* Obtener temperatura al cargar */
+
+updateTemperature();
+
+
+/*
+    Actualizar cada 15 minutos.
 */
 
-temperature.textContent =
-    "24°C";
+setInterval(
+    updateTemperature,
+    15 * 60 * 1000
+);
 
 
 /* =========================
