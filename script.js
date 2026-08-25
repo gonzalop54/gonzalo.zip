@@ -28,121 +28,80 @@ const spotifyBackdrop =
    BACKGROUND MUSIC
 ========================================= */
 
-let musicStarted =
-    false;
+let musicStarted = false;
+let musicWasPlaying = false;
 
-let musicWasPlaying =
-    false;
-
-
-/*
-   Intenta iniciar la música.
-
-   Los navegadores pueden bloquear audio
-   automático con sonido hasta que el
-   visitante interactúe con la página.
-*/
-
-async function startBackgroundMusic() {
-
-    if (
-        !backgroundMusic ||
-        musicStarted
-    ) {
-        return;
-    }
-
-
-    try {
-
-        await backgroundMusic.play();
-
-        musicStarted =
-            true;
-
-        removeMusicStartListeners();
-
-    }
-
-    catch (error) {
-
-        /*
-           Autoplay bloqueado.
-
-           No hacemos nada:
-           empezará con la primera
-           interacción del usuario.
-        */
-
-    }
-
-}
-
-
-/*
-   Quitamos los listeners una vez
-   que la música comenzó.
-*/
-
-function removeMusicStartListeners() {
-
-    document.removeEventListener(
-        "pointerdown",
-        startBackgroundMusic
-    );
-
-
-    document.removeEventListener(
-        "keydown",
-        startBackgroundMusic
-    );
-
-}
-
-
-/*
-   Configuración del audio.
-*/
 
 if (backgroundMusic) {
 
+    backgroundMusic.volume = 0.35;
+
+
+    async function startBackgroundMusic() {
+
+        if (musicStarted) {
+            return;
+        }
+
+
+        try {
+
+            await backgroundMusic.play();
+
+            musicStarted = true;
+
+            document.removeEventListener(
+                "click",
+                startBackgroundMusic
+            );
+
+            document.removeEventListener(
+                "touchstart",
+                startBackgroundMusic
+            );
+
+            document.removeEventListener(
+                "keydown",
+                startBackgroundMusic
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "El navegador bloqueó el autoplay:",
+                error
+            );
+
+        }
+
+    }
+
+
     /*
-       0.25 = 25% de volumen.
-
-       Puedes cambiarlo:
-       0.15 = muy suave
-       0.25 = suave
-       0.40 = más presente
-    */
-
-    backgroundMusic.volume =
-        0.25;
-
-
-    /*
-       Primer intento:
-       reproducir al cargar.
+        Intentamos reproducir al cargar.
     */
 
     startBackgroundMusic();
 
 
     /*
-       Si el navegador bloqueó autoplay,
-       empezará con el primer click,
-       toque o tecla.
-
-       No hay botón ni mensaje.
+        Si el navegador lo bloquea,
+        el primer clic/toque/tecla
+        inicia la música.
     */
 
     document.addEventListener(
-        "pointerdown",
-        startBackgroundMusic,
-        {
-            passive: true
-        }
+        "click",
+        startBackgroundMusic
     );
 
+    document.addEventListener(
+        "touchstart",
+        startBackgroundMusic,
+        { passive: true }
+    );
 
     document.addEventListener(
         "keydown",
