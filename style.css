@@ -315,7 +315,7 @@ body {
 }
 
 
-/* CUANDO ESTÁ SONANDO */
+/* MUSIC PLAYING */
 
 .music-control.playing
 .music-button {
@@ -331,6 +331,20 @@ body {
         0 0 10px
         rgba(255, 26, 26, 0.7);
 }
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.subtitle {
+    color: #888;
+
+    font-size: 14px;
+
+    letter-spacing: 7px;
+}
+
 
 /* =========================
    SOCIAL LINKS
@@ -420,12 +434,26 @@ body {
 }
 
 
+/*
+   Quieto cuando no hay música.
+*/
+
 .audio-mark span {
     width: 2px;
-    height: 5px;
+    height: 4px;
 
     background: var(--red);
 
+    opacity: 0.4;
+}
+
+
+/*
+   Solo se anima cuando
+   fondoreducido.mp3 está sonando.
+*/
+
+.audio-mark.playing span {
     animation:
         bass 1.1s
         ease-in-out
@@ -433,22 +461,26 @@ body {
 }
 
 
-.audio-mark span:nth-child(2) {
+.audio-mark.playing
+span:nth-child(2) {
     animation-delay: 0.15s;
 }
 
 
-.audio-mark span:nth-child(3) {
+.audio-mark.playing
+span:nth-child(3) {
     animation-delay: 0.30s;
 }
 
 
-.audio-mark span:nth-child(4) {
+.audio-mark.playing
+span:nth-child(4) {
     animation-delay: 0.45s;
 }
 
 
-.audio-mark span:nth-child(5) {
+.audio-mark.playing
+span:nth-child(5) {
     animation-delay: 0.60s;
 }
 
@@ -728,6 +760,40 @@ body {
 
         letter-spacing:
             8px;
+    }
+
+
+    /* MUSIC */
+
+    .music-control {
+        gap: 10px;
+
+        margin:
+            24px auto;
+    }
+
+
+    .music-line {
+        width: 20px;
+    }
+
+
+    .music-button {
+        font-size: 8px;
+
+        letter-spacing: 3px;
+    }
+
+
+    .music-control:hover
+    .music-line {
+        width: 26px;
+    }
+
+
+    .music-control:hover
+    .music-button {
+        letter-spacing: 3px;
     }
 
 
