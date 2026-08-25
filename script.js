@@ -181,6 +181,6 @@ if (blinkIntro) {
 
         blinkIntro.remove();
 
-    }, 2500);
+    }, 5000);
 
 }
