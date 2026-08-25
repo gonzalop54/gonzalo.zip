@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>gonzalo.zip</title>
 
@@ -12,22 +16,48 @@
         content="somewhere after midnight."
     >
 
+    <!-- PRELOAD BACKGROUND -->
+    <link
+        rel="preload"
+        as="image"
+        href="fondo.png"
+        fetchpriority="high"
+    >
+
     <!-- GOOGLE FONT -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
+
 
 <body>
 
-    <!-- ENTRY SCREEN -->
-    <div class="entry-screen" id="entryScreen">
+    <!-- ========================================
+         ENTRY SCREEN
+    ========================================= -->
+
+    <div
+        class="entry-screen"
+        id="entryScreen"
+    >
 
         <div class="entry-content">
 
@@ -35,16 +65,19 @@
                 gonzalo.zip<span>.</span>
             </p>
 
+
             <button
                 class="entry-button"
                 id="entryButton"
                 type="button"
             >
+
                 <span class="entry-line"></span>
 
                 enter
 
                 <span class="entry-line"></span>
+
             </button>
 
         </div>
@@ -52,36 +85,75 @@
     </div>
 
 
-    <!-- BACKGROUND -->
+    <!-- ========================================
+         BACKGROUND MUSIC
+    ========================================= -->
+
+    <audio
+        id="backgroundMusic"
+        src="fondoreducido.mp3"
+        preload="metadata"
+        loop
+    ></audio>
+
+
+    <!-- ========================================
+         BACKGROUND
+    ========================================= -->
+
     <div class="background"></div>
+
     <div class="overlay"></div>
-    <div class="noise"></div>
 
 
-    <!-- TOP BAR -->
+    <!-- ========================================
+         TOP BAR
+    ========================================= -->
+
     <header class="topbar">
 
-        <a class="logo" href="/">
+        <a
+            class="logo"
+            href="/"
+        >
             gonzalo.zip<span>.</span>
         </a>
 
+
         <div class="status">
-            <span id="temperature">24°C</span>
-            <span class="separator">|</span>
-            <span id="clock">--:--</span>
+
+            <span id="temperature">
+                24°C
+            </span>
+
+            <span class="separator">
+                |
+            </span>
+
+            <span id="clock">
+                --:--
+            </span>
+
         </div>
 
     </header>
 
 
-    <!-- MAIN -->
+    <!-- ========================================
+         HERO
+    ========================================= -->
+
     <main class="hero">
 
         <div class="hero-content">
 
-            <h1>gonzalo.zip</h1>
+            <h1>
+                gonzalo.zip
+            </h1>
+
 
             <div class="red-line"></div>
+
 
             <p class="subtitle">
                 somewhere after midnight.
@@ -89,9 +161,11 @@
 
 
             <!-- LINKS -->
+
             <nav class="socials">
 
                 <!-- INSTAGRAM -->
+
                 <a
                     href="https://www.instagram.com/gonzalop54/"
                     target="_blank"
@@ -100,10 +174,12 @@
                     instagram
                 </a>
 
+
                 <span>/</span>
 
 
                 <!-- SPOTIFY -->
+
                 <button
                     class="spotify-trigger"
                     id="spotifyTrigger"
@@ -112,10 +188,12 @@
                     spotify
                 </button>
 
+
                 <span>/</span>
 
 
                 <!-- YOUTUBE -->
+
                 <a
                     href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
                     target="_blank"
@@ -124,10 +202,12 @@
                     youtube
                 </a>
 
+
                 <span>/</span>
 
 
                 <!-- MAIL DECORATIVO -->
+
                 <a
                     href="#"
                     onclick="return false;"
@@ -139,8 +219,12 @@
             </nav>
 
 
-            <!-- AUDIO ANIMATION -->
-            <div class="audio-mark" aria-hidden="true">
+            <!-- AUDIO VISUAL -->
+
+            <div
+                class="audio-mark"
+                aria-hidden="true"
+            >
                 <span></span>
                 <span></span>
                 <span></span>
@@ -153,7 +237,10 @@
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
     <footer class="footer">
 
         <p>
@@ -171,7 +258,10 @@
     </footer>
 
 
-    <!-- SPOTIFY MODAL -->
+    <!-- ========================================
+         SPOTIFY
+    ========================================= -->
+
     <div
         class="spotify-modal"
         id="spotifyModal"
