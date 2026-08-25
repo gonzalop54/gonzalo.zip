@@ -864,76 +864,253 @@ body {
 
 }
 
-
 /* =========================
-   BOTTOM EYELID
+   REALISTIC BLINK INTRO
 ========================= */
 
-@keyframes blinkBottom {
+.blink-intro {
+    position: fixed;
+    inset: 0;
 
-    /* CLOSED */
+    z-index: 9999;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+/*
+   La "visión" es un agujero elíptico.
+   Empieza cerrado, se abre como un ojo.
+*/
+
+.blink-intro::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 160vmax;
+    height: 90vmax;
+
+    transform:
+        translate(-50%, -50%)
+        scaleY(0);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 200vmax #000;
+
+    animation:
+        eyeOpen 4.8s
+        cubic-bezier(.55, 0, .25, 1)
+        forwards;
+
+    will-change:
+        transform;
+}
+
+
+/*
+   Blur temporal sobre toda la web.
+   Solo se nota durante la primera apertura.
+*/
+
+.blink-intro::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    opacity: 1;
+
+    animation:
+        visionFocus 4.8s ease forwards;
+
+    will-change:
+        opacity;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   EYE OPENING
+========================= */
+
+@keyframes eyeOpen {
+
+    /* TOTALMENTE CERRADO */
 
     0% {
         transform:
-            translateY(0);
+            translate(-50%, -50%)
+            scaleY(0);
     }
 
 
-    /* FIRST OPEN */
+    /* PRIMERA APERTURA LENTA */
 
-    16% {
+    18% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(0.72);
     }
 
 
-    /* FIRST BLINK */
+    /* SE MANTIENE ABIERTO */
 
-    28% {
+    31% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(0.82);
     }
 
-    36% {
+
+    /* PRIMER PARPADEO */
+
+    43% {
         transform:
-            translateY(0);
+            translate(-50%, -50%)
+            scaleY(0.02);
     }
 
-    44% {
+
+    /* SEGUNDA APERTURA */
+
+    59% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(0.92);
     }
 
 
-    /* SECOND BLINK */
+    /* PEQUEÑA PAUSA */
 
-    60% {
+    70% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(0.98);
     }
 
-    67% {
+
+    /* SEGUNDO PARPADEO */
+
+    78% {
         transform:
-            translateY(0);
+            translate(-50%, -50%)
+            scaleY(0.03);
     }
 
-    73% {
+
+    /* APERTURA FINAL */
+
+    92% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(1.25);
     }
 
 
-    /* STAY OPEN */
+    /* COMPLETAMENTE ABIERTO */
 
     100% {
         transform:
-            translateY(100%);
+            translate(-50%, -50%)
+            scaleY(1.35);
     }
 
 }
 
 
-/* ACCESSIBILITY */
+/* =========================
+   FIRST BLUR → CLEAR
+========================= */
+
+@keyframes visionFocus {
+
+    /* PRIMERA APERTURA MUY DIFUSA */
+
+    0% {
+        opacity: 1;
+    }
+
+    18% {
+        opacity: 0.95;
+    }
+
+    31% {
+        opacity: 0.8;
+    }
+
+
+    /* PRIMER CIERRE */
+
+    43% {
+        opacity: 0.9;
+    }
+
+
+    /* SEGUNDA APERTURA ENFOCANDO */
+
+    59% {
+        opacity: 0.45;
+    }
+
+    70% {
+        opacity: 0.15;
+    }
+
+
+    /* SEGUNDO CIERRE */
+
+    78% {
+        opacity: 0.2;
+    }
+
+
+    /* APERTURA FINAL NÍTIDA */
+
+    92% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================
+   MOBILE TUNING
+========================= */
+
+@media (max-width: 700px) {
+
+    .blink-intro::before {
+        width: 190vmax;
+        height: 125vmax;
+    }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media (prefers-reduced-motion: reduce) {
 
