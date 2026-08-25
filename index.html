@@ -20,7 +20,7 @@
     <link
         rel="preload"
         as="image"
-        href="fondo.png"
+        href="./fondo.png"
         fetchpriority="high"
     >
 
@@ -41,10 +41,9 @@
         rel="stylesheet"
     >
 
-    <!-- CSS -->
     <link
         rel="stylesheet"
-        href="style.css"
+        href="./style.css"
     >
 </head>
 
@@ -52,177 +51,212 @@
 <body>
 
     <!-- ==============================
+         BACKGROUND
+    =============================== -->
+
+    <div class="background"></div>
+    <div class="overlay"></div>
+
+
+    <!-- ==============================
          BACKGROUND MUSIC
     =============================== -->
 
     <audio
         id="backgroundMusic"
-        src="fondoreducido.mp3"
+        src="./fondoreducido.mp3"
         preload="metadata"
         loop
     ></audio>
 
 
     <!-- ==============================
-         BACKGROUND
+         PAGE
     =============================== -->
 
-    <div class="background"></div>
-
-    <div class="overlay"></div>
+    <div class="page">
 
 
-    <!-- ==============================
-         TOP BAR
-    =============================== -->
+        <!-- TOP BAR -->
 
-    <header class="topbar">
+        <header class="topbar">
 
-        <a
-            class="logo"
-            href="/"
-        >
-            gonzalo.zip<span>.</span>
-        </a>
+            <a
+                class="logo"
+                href="./"
+            >
+                gonzalo.zip<span>.</span>
+            </a>
 
 
-        <div class="status">
+            <div class="top-right">
 
-            <span id="temperature">
-                24°C
-            </span>
+                <div class="status">
 
-            <span class="separator">
-                |
-            </span>
+                    <span id="temperature">
+                        24°C
+                    </span>
 
-            <span id="clock">
-                --:--
-            </span>
+                    <span class="separator">
+                        |
+                    </span>
 
-        </div>
+                    <span id="clock">
+                        --:--
+                    </span>
 
-    </header>
-
-
-    <!-- ==============================
-         MAIN
-    =============================== -->
-
-    <main class="hero">
-
-        <div class="hero-content">
-
-            <h1>
-                gonzalo.zip
-            </h1>
+                </div>
 
 
-            <div class="red-line"></div>
-
-
-            <p class="subtitle">
-                somewhere after midnight.
-            </p>
-
-
-            <!-- LINKS -->
-
-            <nav class="socials">
-
-
-                <!-- INSTAGRAM -->
-
-                <a
-                    href="https://www.instagram.com/gonzalop54/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    instagram
-                </a>
-
-
-                <span>/</span>
-
-
-                <!-- SPOTIFY -->
+                <!-- MUSIC BUTTON -->
 
                 <button
-                    class="spotify-trigger"
-                    id="spotifyTrigger"
+                    class="sound-button"
+                    id="soundButton"
                     type="button"
+                    aria-label="reproducir música"
                 >
-                    spotify
+
+                    <span
+                        class="sound-icon"
+                        id="soundIcon"
+                    >
+                        ▶
+                    </span>
+
+                    <span id="soundText">
+                        sound
+                    </span>
+
                 </button>
 
-
-                <span>/</span>
-
-
-                <!-- YOUTUBE -->
-
-                <a
-                    href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    youtube
-                </a>
-
-
-                <span>/</span>
-
-
-                <!-- MAIL DECORATIVO -->
-
-                <a
-                    href="#"
-                    onclick="return false;"
-                    aria-label="mail"
-                >
-                    mail
-                </a>
-
-            </nav>
-
-
-            <!-- AUDIO VISUAL -->
-
-            <div
-                class="audio-mark"
-                aria-hidden="true"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
             </div>
 
-        </div>
-
-    </main>
+        </header>
 
 
-    <!-- ==============================
-         FOOTER
-    =============================== -->
+        <!-- ==============================
+             HERO
+        =============================== -->
 
-    <footer class="footer">
+        <main class="hero">
 
-        <p>
-            bass is a feeling<span>.</span>
-        </p>
+            <div class="hero-content">
 
-        <p>
-            currently driving<span>.</span>
-        </p>
+                <h1>
+                    gonzalo.zip
+                </h1>
 
-        <p>
-            keep the streets empty<span>.</span>
-        </p>
 
-    </footer>
+                <div class="red-line"></div>
+
+
+                <p class="subtitle">
+                    somewhere after midnight.
+                </p>
+
+
+                <!-- LINKS -->
+
+                <nav class="socials">
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="https://www.instagram.com/gonzalop54/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        instagram
+                    </a>
+
+
+                    <span>/</span>
+
+
+                    <!-- SPOTIFY -->
+
+                    <button
+                        class="spotify-trigger"
+                        id="spotifyTrigger"
+                        type="button"
+                    >
+                        spotify
+                    </button>
+
+
+                    <span>/</span>
+
+
+                    <!-- YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        youtube
+                    </a>
+
+
+                    <span>/</span>
+
+
+                    <!-- MAIL DECORATIVO -->
+
+                    <a
+                        href="#"
+                        onclick="return false;"
+                        aria-label="mail"
+                    >
+                        mail
+                    </a>
+
+                </nav>
+
+
+                <!-- AUDIO VISUAL -->
+
+                <div
+                    class="audio-mark"
+                    id="audioMark"
+                    aria-hidden="true"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- ==============================
+             FOOTER
+        =============================== -->
+
+        <footer class="footer">
+
+            <p>
+                bass is a feeling<span>.</span>
+            </p>
+
+            <p>
+                currently driving<span>.</span>
+            </p>
+
+            <p>
+                keep the streets empty<span>.</span>
+            </p>
+
+        </footer>
+
+    </div>
 
 
     <!-- ==============================
@@ -235,15 +269,11 @@
         aria-hidden="true"
     >
 
-        <!-- DARK BACKGROUND -->
-
         <div
             class="spotify-backdrop"
             id="spotifyBackdrop"
         ></div>
 
-
-        <!-- PLAYER -->
 
         <div
             class="spotify-panel"
@@ -283,9 +313,7 @@
     </div>
 
 
-    <!-- JAVASCRIPT -->
-
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 
 </body>
 
