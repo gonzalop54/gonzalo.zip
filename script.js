@@ -166,3 +166,21 @@ document.addEventListener(
 
     }
 );
+
+/* =========================
+   BLINK INTRO
+========================= */
+
+const blinkIntro =
+    document.querySelector("#blinkIntro");
+
+
+if (blinkIntro) {
+
+    setTimeout(() => {
+
+        blinkIntro.remove();
+
+    }, 2500);
+
+}
