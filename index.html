@@ -1,59 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>gonzalo.zip</title>
-
     <meta
         name="description"
-        content="Un rincón de internet donde hago experimentos, páginas random y otras cosas."
+        content="somewhere after midnight."
     >
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="home">
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <div class="noise"></div>
 
-        <header class="hero">
-            <p class="eyebrow">archivo personal</p>
+    <header class="topbar">
+        <a class="logo" href="/">
+            gonzalo.zip<span>.</span>
+        </a>
+
+        <div class="status">
+            <span id="temperature">--°C</span>
+            <span class="separator">|</span>
+            <span id="clock">--:--</span>
+        </div>
+    </header>
+
+    <main class="hero">
+
+        <div class="hero-content">
 
             <h1>gonzalo.zip</h1>
 
-            <p class="hero-description">
-                Un rincón de internet donde pruebo cosas,
-                hago experimentos y subo cualquier idea random.
+            <div class="red-line"></div>
+
+            <p class="subtitle">
+                somewhere after midnight.
             </p>
-        </header>
 
-        <section class="experiments">
+            <nav class="socials">
+                <a
+                    href="https://instagram.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    instagram
+                </a>
 
-            <div class="section-header">
-                <h2>Experimentos</h2>
-                <span id="experiment-count">cargando...</span>
+                <span>/</span>
+
+                <a
+                    href="https://open.spotify.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    spotify
+                </a>
+
+                <span>/</span>
+
+                <a
+                    href="#"
+                >
+                    youtube
+                </a>
+
+                <span>/</span>
+
+                <a href="mailto:tuemail@example.com">
+                    mail
+                </a>
+            </nav>
+
+            <div class="audio-mark" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
-            <div
-                id="experiment-list"
-                class="experiment-list"
-            ></div>
-
-        </section>
-
-        <footer class="site-footer">
-            <p>
-                hecho por Gonzalo · probablemente sin ningún motivo
-            </p>
-        </footer>
+        </div>
 
     </main>
 
-    <script src="js/main.js"></script>
+    <footer class="footer">
+
+        <p>
+            bass is a feeling<span>.</span>
+        </p>
+
+        <p>
+            currently driving<span>.</span>
+        </p>
+
+        <p>
+            keep the streets empty<span>.</span>
+        </p>
+
+    </footer>
+
+    <script src="script.js"></script>
 
 </body>
-
 </html>
