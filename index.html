@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>gonzalo.zip</title>
+
     <meta
         name="description"
         content="somewhere after midnight."
@@ -15,22 +17,29 @@
 
 <body>
 
+    <!-- BACKGROUND -->
     <div class="background"></div>
     <div class="overlay"></div>
     <div class="noise"></div>
 
+
+    <!-- TOP BAR -->
     <header class="topbar">
+
         <a class="logo" href="/">
             gonzalo.zip<span>.</span>
         </a>
 
         <div class="status">
-            <span id="temperature">--°C</span>
+            <span id="temperature">24°C</span>
             <span class="separator">|</span>
             <span id="clock">--:--</span>
         </div>
+
     </header>
 
+
+    <!-- MAIN -->
     <main class="hero">
 
         <div class="hero-content">
@@ -43,7 +52,10 @@
                 somewhere after midnight.
             </p>
 
+
+            <!-- SOCIAL LINKS -->
             <nav class="socials">
+
                 <a
                     href="https://instagram.com/"
                     target="_blank"
@@ -54,13 +66,13 @@
 
                 <span>/</span>
 
-                <a
-                    href="https://open.spotify.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <button
+                    class="spotify-trigger"
+                    id="spotifyTrigger"
+                    type="button"
                 >
                     spotify
-                </a>
+                </button>
 
                 <span>/</span>
 
@@ -75,8 +87,11 @@
                 <a href="mailto:tuemail@example.com">
                     mail
                 </a>
+
             </nav>
 
+
+            <!-- SMALL AUDIO ANIMATION -->
             <div class="audio-mark" aria-hidden="true">
                 <span></span>
                 <span></span>
@@ -89,6 +104,8 @@
 
     </main>
 
+
+    <!-- FOOTER -->
     <footer class="footer">
 
         <p>
@@ -105,7 +122,60 @@
 
     </footer>
 
+
+    <!-- SPOTIFY MODAL -->
+    <div
+        class="spotify-modal"
+        id="spotifyModal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="spotify-backdrop"
+            id="spotifyBackdrop"
+        ></div>
+
+
+        <div
+            class="spotify-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Spotify playlist"
+        >
+
+            <button
+                class="spotify-close"
+                id="spotifyClose"
+                type="button"
+                aria-label="cerrar"
+            >
+                ×
+            </button>
+
+
+            <div class="spotify-label">
+                night transmission<span>.</span>
+            </div>
+
+
+            <iframe
+                src="https://open.spotify.com/embed/playlist/34KWfW88GK15EPBo6jM2Wa?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Spotify playlist"
+            ></iframe>
+
+        </div>
+
+    </div>
+
+
     <script src="script.js"></script>
 
 </body>
+
 </html>
