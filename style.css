@@ -30,8 +30,7 @@ body {
 
 
 html {
-    background:
-        var(--background);
+    background: var(--background);
 }
 
 
@@ -41,18 +40,15 @@ body {
 
     overflow: hidden;
 
-    background:
-        var(--background);
+    background: var(--background);
 
-    color:
-        var(--white);
+    color: var(--white);
 
     font-family:
         "IBM Plex Mono",
         monospace;
 
-    -webkit-font-smoothing:
-        antialiased;
+    -webkit-font-smoothing: antialiased;
 }
 
 
@@ -62,7 +58,6 @@ body {
 
 .background {
     position: fixed;
-
     inset: 0;
 
     width: 100%;
@@ -70,62 +65,66 @@ body {
     height: 100dvh;
 
     background-image:
-        url("fondo.png");
+        url("./fondo.png");
 
-    background-size:
-        cover;
+    background-size: cover;
 
     background-position:
-        center;
+        center center;
 
     background-repeat:
         no-repeat;
 
-    /*
-        Un scale muy pequeño evita
-        bordes visibles.
-    */
+    pointer-events: none;
 
-    transform:
-        scale(1.005);
-
-    pointer-events:
-        none;
-
-    z-index:
-        -3;
+    z-index: 0;
 }
 
 
 /* =========================================
-   DARK OVERLAY
+   OVERLAY
 ========================================= */
 
 .overlay {
     position: fixed;
-
     inset: 0;
 
-    pointer-events:
-        none;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    pointer-events: none;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(0, 0, 0, 0.10) 0%,
-            rgba(0, 0, 0, 0.25) 45%,
-            rgba(0, 0, 0, 0.82) 100%
+            rgba(0, 0, 0, 0.05) 0%,
+            rgba(0, 0, 0, 0.20) 50%,
+            rgba(0, 0, 0, 0.72) 100%
         ),
-
         linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.10) 45%,
-            rgba(0, 0, 0, 0.72)
+            rgba(0, 0, 0, 0.38),
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.65)
         );
 
-    z-index:
-        -2;
+    z-index: 1;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    z-index: 2;
 }
 
 
@@ -160,26 +159,15 @@ body {
 
     z-index:
         10;
-
-    opacity:
-        0;
-
-    animation:
-        interfaceAppear
-        0.7s
-        ease
-        forwards;
 }
 
 
 /* LOGO */
 
 .logo {
-    color:
-        #999;
+    color: #999;
 
-    text-decoration:
-        none;
+    text-decoration: none;
 
     transition:
         color 0.2s ease;
@@ -187,33 +175,124 @@ body {
 
 
 .logo:hover {
-    color:
-        var(--white);
+    color: var(--white);
 }
 
 
 .logo span {
-    color:
-        var(--red);
+    color: var(--red);
 }
 
 
-/* STATUS */
+/* RIGHT SIDE */
+
+.top-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+}
+
 
 .status {
     display: flex;
 
-    gap:
-        14px;
+    align-items: center;
 
-    color:
-        #999;
+    gap: 14px;
+
+    color: #999;
 }
 
 
 .separator {
-    opacity:
-        0.5;
+    opacity: 0.5;
+}
+
+
+/* =========================================
+   SOUND BUTTON
+========================================= */
+
+.sound-button {
+    appearance: none;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    padding:
+        9px 13px;
+
+    background:
+        rgba(0, 0, 0, 0.25);
+
+    color:
+        #888;
+
+    font-family:
+        inherit;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        3px;
+
+    cursor:
+        pointer;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.sound-button:hover {
+    color:
+        #fff;
+
+    border-color:
+        rgba(255, 26, 26, 0.45);
+
+    background:
+        rgba(0, 0, 0, 0.5);
+}
+
+
+.sound-icon {
+    color:
+        var(--red);
+
+    font-size:
+        8px;
+}
+
+
+/* PLAYING */
+
+.sound-button.playing {
+    color:
+        #ddd;
+
+    border-color:
+        rgba(255, 26, 26, 0.35);
+}
+
+
+.sound-button.playing
+.sound-icon {
+    text-shadow:
+        0 0 8px
+        rgba(255, 26, 26, 0.8);
 }
 
 
@@ -222,17 +301,12 @@ body {
 ========================================= */
 
 .hero {
-    width:
-        100%;
+    width: 100%;
 
-    height:
-        100vh;
+    height: 100vh;
+    height: 100dvh;
 
-    height:
-        100dvh;
-
-    display:
-        flex;
+    display: flex;
 
     justify-content:
         center;
@@ -248,15 +322,6 @@ body {
 .hero-content {
     position:
         relative;
-
-    opacity:
-        0;
-
-    animation:
-        heroAppear
-        0.9s
-        cubic-bezier(.2, .8, .2, 1)
-        forwards;
 }
 
 
@@ -382,9 +447,7 @@ body {
 }
 
 
-/* =========================================
-   SPOTIFY BUTTON
-========================================= */
+/* SPOTIFY BUTTON */
 
 .spotify-trigger {
     appearance:
@@ -398,9 +461,6 @@ body {
 
     background:
         transparent;
-
-    color:
-        #aaa;
 
     font-family:
         inherit;
@@ -417,7 +477,7 @@ body {
 
 
 /* =========================================
-   AUDIO MARK
+   AUDIO VISUAL
 ========================================= */
 
 .audio-mark {
@@ -451,6 +511,14 @@ body {
     background:
         var(--red);
 
+    opacity:
+        0.4;
+}
+
+
+/* SOLO ANIMA CUANDO SUENA */
+
+.audio-mark.playing span {
     animation:
         bass
         1.1s
@@ -459,25 +527,29 @@ body {
 }
 
 
-.audio-mark span:nth-child(2) {
+.audio-mark.playing
+span:nth-child(2) {
     animation-delay:
         0.15s;
 }
 
 
-.audio-mark span:nth-child(3) {
+.audio-mark.playing
+span:nth-child(3) {
     animation-delay:
         0.30s;
 }
 
 
-.audio-mark span:nth-child(4) {
+.audio-mark.playing
+span:nth-child(4) {
     animation-delay:
         0.45s;
 }
 
 
-.audio-mark span:nth-child(5) {
+.audio-mark.playing
+span:nth-child(5) {
     animation-delay:
         0.60s;
 }
@@ -517,16 +589,6 @@ body {
 
     color:
         #666;
-
-    opacity:
-        0;
-
-    animation:
-        interfaceAppear
-        0.7s
-        ease
-        0.15s
-        forwards;
 }
 
 
@@ -549,7 +611,7 @@ body {
 
 
 /* =========================================
-   SPOTIFY MODAL
+   SPOTIFY
 ========================================= */
 
 .spotify-modal {
@@ -601,8 +663,6 @@ body {
 }
 
 
-/* DARK BACKGROUND */
-
 .spotify-backdrop {
     position:
         absolute;
@@ -614,8 +674,6 @@ body {
         rgba(0, 0, 0, 0.86);
 }
 
-
-/* PLAYER PANEL */
 
 .spotify-panel {
     position:
@@ -667,8 +725,6 @@ body {
 }
 
 
-/* LABEL */
-
 .spotify-label {
     margin-bottom:
         20px;
@@ -681,9 +737,6 @@ body {
 
     letter-spacing:
         5px;
-
-    text-transform:
-        lowercase;
 }
 
 
@@ -692,8 +745,6 @@ body {
         var(--red);
 }
 
-
-/* CLOSE */
 
 .spotify-close {
     position:
@@ -720,9 +771,6 @@ body {
     font-size:
         25px;
 
-    font-weight:
-        300;
-
     cursor:
         pointer;
 
@@ -741,8 +789,6 @@ body {
 }
 
 
-/* SPOTIFY IFRAME */
-
 .spotify-panel iframe {
     display:
         block;
@@ -753,44 +799,8 @@ body {
 
 
 /* =========================================
-   ANIMATIONS
+   BASS
 ========================================= */
-
-@keyframes heroAppear {
-
-    from {
-        opacity:
-            0;
-
-        transform:
-            translateY(12px);
-    }
-
-    to {
-        opacity:
-            1;
-
-        transform:
-            translateY(0);
-    }
-
-}
-
-
-@keyframes interfaceAppear {
-
-    from {
-        opacity:
-            0;
-    }
-
-    to {
-        opacity:
-            1;
-    }
-
-}
-
 
 @keyframes bass {
 
@@ -823,21 +833,60 @@ body {
     .background {
         background-position:
             55% center;
-
-        transform:
-            none;
     }
 
 
     .topbar {
         padding:
-            24px 20px;
+            20px;
 
+        align-items:
+            flex-start;
+    }
+
+
+    .logo {
         font-size:
             9px;
 
         letter-spacing:
             3px;
+    }
+
+
+    .top-right {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-end;
+
+        gap:
+            12px;
+    }
+
+
+    .status {
+        font-size:
+            9px;
+
+        letter-spacing:
+            2px;
+
+        gap:
+            8px;
+    }
+
+
+    .sound-button {
+        font-size:
+            8px;
+
+        letter-spacing:
+            2px;
+
+        padding:
+            8px 10px;
     }
 
 
@@ -923,43 +972,6 @@ body {
 
         padding:
             20px;
-
-        padding-top:
-            26px;
-    }
-
-
-    .spotify-panel iframe {
-        height:
-            352px;
-    }
-
-}
-
-
-/* =========================================
-   REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .topbar,
-    .hero-content,
-    .footer {
-        animation:
-            none;
-
-        opacity:
-            1;
-
-        transform:
-            none;
-    }
-
-
-    .audio-mark span {
-        animation:
-            none;
     }
 
 }
