@@ -3,11 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>gonzalo.zip</title>
 
@@ -16,253 +12,141 @@
         content="somewhere after midnight."
     >
 
-    <!-- PRELOAD BACKGROUND -->
-    <link
-        rel="preload"
-        as="image"
-        href="./fondo.png"
-        fetchpriority="high"
-    >
-
     <!-- GOOGLE FONT -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap"
         rel="stylesheet"
     >
 
-    <link
-        rel="stylesheet"
-        href="./style.css"
-    >
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-    <!-- ==============================
-         BACKGROUND
-    =============================== -->
-
+    <!-- BACKGROUND -->
     <div class="background"></div>
     <div class="overlay"></div>
+    <div class="noise"></div>
 
 
-    <!-- ==============================
-         BACKGROUND MUSIC
-    =============================== -->
+    <!-- TOP BAR -->
+    <header class="topbar">
 
-    <audio
-        id="backgroundMusic"
-        src="./fondoreducido.mp3"
-        preload="metadata"
-        loop
-    ></audio>
+        <a class="logo" href="/">
+            gonzalo.zip<span>.</span>
+        </a>
 
+        <div class="status">
+            <span id="temperature">24°C</span>
+            <span class="separator">|</span>
+            <span id="clock">--:--</span>
+        </div>
 
-    <!-- ==============================
-         PAGE
-    =============================== -->
-
-    <div class="page">
+    </header>
 
 
-        <!-- TOP BAR -->
+    <!-- MAIN -->
+    <main class="hero">
 
-        <header class="topbar">
+        <div class="hero-content">
 
-            <a
-                class="logo"
-                href="./"
-            >
-                gonzalo.zip<span>.</span>
-            </a>
+            <h1>gonzalo.zip</h1>
 
+            <div class="red-line"></div>
 
-            <div class="top-right">
-
-                <div class="status">
-
-                    <span id="temperature">
-                        24°C
-                    </span>
-
-                    <span class="separator">
-                        |
-                    </span>
-
-                    <span id="clock">
-                        --:--
-                    </span>
-
-                </div>
+            <p class="subtitle">
+                somewhere after midnight.
+            </p>
 
 
-                <!-- MUSIC BUTTON -->
+            <!-- LINKS -->
+            <nav class="socials">
 
-                <button
-                    class="sound-button"
-                    id="soundButton"
-                    type="button"
-                    aria-label="reproducir música"
+                <!-- INSTAGRAM -->
+                <a
+                    href="https://www.instagram.com/gonzalop54/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
+                    instagram
+                </a>
 
-                    <span
-                        class="sound-icon"
-                        id="soundIcon"
-                    >
-                        ▶
-                    </span>
+                <span>/</span>
 
-                    <span id="soundText">
-                        sound
-                    </span>
 
+                <!-- SPOTIFY -->
+                <button
+                    class="spotify-trigger"
+                    id="spotifyTrigger"
+                    type="button"
+                >
+                    spotify
                 </button>
 
-            </div>
-
-        </header>
+                <span>/</span>
 
 
-        <!-- ==============================
-             HERO
-        =============================== -->
-
-        <main class="hero">
-
-            <div class="hero-content">
-
-                <h1>
-                    gonzalo.zip
-                </h1>
-
-
-                <div class="red-line"></div>
-
-
-                <p class="subtitle">
-                    somewhere after midnight.
-                </p>
-
-
-                <!-- LINKS -->
-
-                <nav class="socials">
-
-                    <!-- INSTAGRAM -->
-
-                    <a
-                        href="https://www.instagram.com/gonzalop54/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        instagram
-                    </a>
-
-
-                    <span>/</span>
-
-
-                    <!-- SPOTIFY -->
-
-                    <button
-                        class="spotify-trigger"
-                        id="spotifyTrigger"
-                        type="button"
-                    >
-                        spotify
-                    </button>
-
-
-                    <span>/</span>
-
-
-                    <!-- YOUTUBE -->
-
-                    <a
-                        href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        youtube
-                    </a>
-
-
-                    <span>/</span>
-
-
-                    <!-- MAIL DECORATIVO -->
-
-                    <a
-                        href="#"
-                        onclick="return false;"
-                        aria-label="mail"
-                    >
-                        mail
-                    </a>
-
-                </nav>
-
-
-                <!-- AUDIO VISUAL -->
-
-                <div
-                    class="audio-mark"
-                    id="audioMark"
-                    aria-hidden="true"
+                <!-- YOUTUBE -->
+                <a
+                    href="https://www.youtube.com/watch?v=f_WuRfuMXQw"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
+                    youtube
+                </a>
 
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <span>/</span>
 
-                </div>
 
+                <!-- MAIL DECORATIVO -->
+                <a
+                    href="#"
+                    onclick="return false;"
+                    aria-label="mail"
+                >
+                    mail
+                </a>
+
+            </nav>
+
+
+            <!-- AUDIO ANIMATION -->
+            <div class="audio-mark" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
-        </main>
+        </div>
+
+    </main>
 
 
-        <!-- ==============================
-             FOOTER
-        =============================== -->
+    <!-- FOOTER -->
+    <footer class="footer">
 
-        <footer class="footer">
+        <p>
+            bass is a feeling<span>.</span>
+        </p>
 
-            <p>
-                bass is a feeling<span>.</span>
-            </p>
+        <p>
+            currently driving<span>.</span>
+        </p>
 
-            <p>
-                currently driving<span>.</span>
-            </p>
+        <p>
+            keep the streets empty<span>.</span>
+        </p>
 
-            <p>
-                keep the streets empty<span>.</span>
-            </p>
-
-        </footer>
-
-    </div>
+    </footer>
 
 
-    <!-- ==============================
-         SPOTIFY MODAL
-    =============================== -->
-
+    <!-- SPOTIFY MODAL -->
     <div
         class="spotify-modal"
         id="spotifyModal"
@@ -313,7 +197,8 @@
     </div>
 
 
-    <script src="./script.js"></script>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
 
 </body>
 
