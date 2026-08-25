@@ -26,16 +26,21 @@ function updateClock() {
 
     clock.textContent =
         `${hours}:${minutes}`;
-
 }
 
 
 updateClock();
 
 
+/*
+    Como solo mostramos horas y minutos,
+    no necesitamos actualizarlo cada segundo.
+    Una vez cada 30 segundos es suficiente.
+*/
+
 setInterval(
     updateClock,
-    1000
+    30000
 );
 
 
@@ -43,18 +48,16 @@ setInterval(
    TEMPERATURE
 ========================= */
 
-/*
-    Por ahora dejamos la temperatura
-    estática.
-
-    Después podemos hacer que detecte
-    automáticamente la temperatura
-    real.
-*/
-
 const temperature =
     document.querySelector("#temperature");
 
+
+/*
+    Por ahora estática.
+
+    Más adelante podemos hacer que
+    muestre la temperatura real.
+*/
 
 temperature.textContent =
     "24°C";
@@ -97,7 +100,6 @@ function openSpotify() {
 
     document.body.style.overflow =
         "hidden";
-
 }
 
 
@@ -118,11 +120,10 @@ function closeSpotify() {
 
     document.body.style.overflow =
         "";
-
 }
 
 
-/* CLICK SPOTIFY */
+/* SPOTIFY BUTTON */
 
 spotifyTrigger.addEventListener(
     "click",
@@ -130,7 +131,7 @@ spotifyTrigger.addEventListener(
 );
 
 
-/* CLICK X */
+/* CLOSE BUTTON */
 
 spotifyClose.addEventListener(
     "click",
@@ -146,7 +147,7 @@ spotifyBackdrop.addEventListener(
 );
 
 
-/* ESC KEY */
+/* ESC */
 
 document.addEventListener(
     "keydown",
